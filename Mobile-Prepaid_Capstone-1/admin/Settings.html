@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Plans</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="Settings.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <img src="./assets/logo-finalz.png" height="40" width="100" alt="Company Logo" class="company-logo">
+                </div>
+                <button class="btn toggle-sidebar-btn d-md-none" id="sidebarCollapseBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            
+            <div class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-header">Overview</div>
+                    <ul class="nav-links">
+                        <li><a href="admin-dashboard.html"><i class="fas fa-chart-pie"></i> <span>Dashboard</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-header">Manage</div>
+                    <ul class="nav-links">
+                        <li><a href="Users.html"><i class="fas fa-users"></i> <span>Users</span></a></li>
+                        <li class="active"><a href="Plans.html"><i class="fas fa-list-alt"></i> <span>Plans</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-header">Settings</div>
+                    <ul class="nav-links">
+                        <li><a href="Settings.html"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                <div class="container-fluid">
+                    <button class="btn d-lg-none" id="mobileSidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h3 class="navbar-brand mb-0">Settings</h3>
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge d-none">
+                                    
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationsDropdown">
+                                <li class="dropdown-header">Notifications</li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="notification-item empty-notification">No new notifications</li>
+                            </ul>
+                        </div>
+                        <div class="dropdown ms-3">
+                            <button class="btn dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                                <!-- <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li> -->
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            </div>
+
+            </div>
+</body>
+</html>

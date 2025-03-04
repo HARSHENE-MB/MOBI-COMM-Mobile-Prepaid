@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+        .success-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+        .checkmark {
+            font-size: 60px;
+            color: rgb(86, 244, 86);
+            animation: pop 0.5s ease;
+        }
+        @keyframes pop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="checkmark"><img src="asserts/green-tick.png" height="75px" alt="✔"></div><br>
+        <h2>Payment Successful!</h2>
+        <p>Your transaction has been completed.</p>
+        <p>Redirecting to home page...</p>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            window.location.href = "./index.html"; 
+        }, 3000);
+    </script>
+</body>
+</html>

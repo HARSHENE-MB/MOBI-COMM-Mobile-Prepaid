@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.navbar {
+    margin-left: 220px;
+    padding: 15px 20px;
+}
+
+.sidebar {
+    width: 220px;
+    min-height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #2c3e50;
+    padding: 15px;
+    z-index: 1000;
+    color: white;
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 25px;
+    color: white;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar .menu-header {
+    font-size: 12px;
+    color: #95a5a6;
+    margin: 20px 0 10px;
+    padding-left: 5px;
+    text-transform: uppercase;
+}
+
+.sidebar ul li a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: #ecf0f1;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.sidebar ul li a i {
+    margin-right: 10px;
+    width: 20px;
+}
+
+.sidebar ul li a:hover, .sidebar ul li a.active {
+    background: rgba(255,255,255,0.1);
+    color: #3498db;
+}   margin-top: 10px;
+}
+
+/* Dashboard Content */
+.container-fluid {
+    margin-left: 250px; /* Adjusted for sidebar */
+    padding: 20px;
+}
+
+/* Card Styles */
+.card {
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+}
+
+.card h5 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Profile Badge */
+#adminProfile {
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Table Styling */
+.table {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table th {
+    background: #f1f1f1;
+    font-weight: 500;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+/* Buttons */
+.btn {
+    font-size: 14px;
+    padding: 6px 12px;
+}
+
+
+
+/* Main Content */
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+/* Cards */
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}

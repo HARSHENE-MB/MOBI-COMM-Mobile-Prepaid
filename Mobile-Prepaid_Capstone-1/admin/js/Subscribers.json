@@ -1,0 +1,710 @@
+{
+    "subscribers": [
+      {
+        "id": 1,
+        "name": "Rahul Sharma",
+        "phone": "+91 98765 43210",
+        "email": "rahul.sharma@example.com",
+        "dob": "1985-04-12",
+        "gender": "Male",
+        "expiry": "2025-03-10",
+        "status": "active",
+        "cardType": "Credit Card",
+        "cardHolder": "Rahul Sharma",
+        "cardLastFour": "4321",
+        "cardExpiry": "09/26",
+        "transactions": [
+          {
+            "date": "2025-02-10",
+            "amount": "599",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-12",
+            "amount": "599",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-12-10",
+            "amount": "599",
+            "method": "Credit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Priya Patel",
+        "phone": "+91 90123 45678",
+        "email": "priya.patel@example.com",
+        "dob": "1990-08-25",
+        "gender": "Female",
+        "expiry": "2025-03-04",
+        "status": "active",
+        "cardType": "Debit Card",
+        "cardHolder": "Priya Patel",
+        "cardLastFour": "7890",
+        "cardExpiry": "11/25",
+        "transactions": [
+          {
+            "date": "2025-02-04",
+            "amount": "299",
+            "method": "Debit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-05",
+            "amount": "299",
+            "method": "Debit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-12-05",
+            "amount": "349",
+            "method": "UPI",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Amit Kumar",
+        "phone": "+91 87654 32109",
+        "email": "amit.kumar@example.com",
+        "dob": "1982-11-30",
+        "gender": "Male",
+        "expiry": "2025-03-07",
+        "status": "active",
+        "cardType": "Credit Card",
+        "cardHolder": "Amit Kumar",
+        "cardLastFour": "5678",
+        "cardExpiry": "04/27",
+        "transactions": [
+          {
+            "date": "2025-02-07",
+            "amount": "499",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-06",
+            "amount": "499",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-12-05",
+            "amount": "499",
+            "method": "Credit Card",
+            "status": "Failed"
+          },
+          {
+            "date": "2024-12-05",
+            "amount": "499",
+            "method": "Credit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Sneha Verma",
+        "phone": "+91 76543 21098",
+        "email": "sneha.verma@example.com",
+        "dob": "1995-02-14",
+        "gender": "Female",
+        "expiry": "2025-03-15",
+        "status": "active",
+        "cardType": "UPI",
+        "cardHolder": "N/A",
+        "cardLastFour": "N/A",
+        "cardExpiry": "N/A",
+        "transactions": [
+          {
+            "date": "2025-02-15",
+            "amount": "199",
+            "method": "UPI",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-16",
+            "amount": "199",
+            "method": "UPI",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "Vikram Singh",
+        "phone": "+91 65432 10987",
+        "email": "vikram.singh@example.com",
+        "dob": "1988-07-19",
+        "gender": "Male",
+        "expiry": "2025-03-01",
+        "status": "inactive",
+        "cardType": "Credit Card",
+        "cardHolder": "Vikram Singh",
+        "cardLastFour": "9012",
+        "cardExpiry": "08/26",
+        "transactions": [
+          {
+            "date": "2025-01-01",
+            "amount": "999",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-12-02",
+            "amount": "999",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-11-01",
+            "amount": "999",
+            "method": "Credit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Neha Gupta",
+        "phone": "+91 54321 09876",
+        "email": "neha.gupta@example.com",
+        "dob": "1992-05-23",
+        "gender": "Female",
+        "expiry": "2025-03-05",
+        "status": "active",
+        "cardType": "Debit Card",
+        "cardHolder": "Neha Gupta",
+        "cardLastFour": "3456",
+        "cardExpiry": "02/26",
+        "transactions": [
+          {
+            "date": "2025-02-05",
+            "amount": "149",
+            "method": "Debit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-05",
+            "amount": "149",
+            "method": "Debit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "name": "Rajesh Khanna",
+        "phone": "+91 43210 98765",
+        "email": "rajesh.khanna@example.com",
+        "dob": "1979-09-11",
+        "gender": "Male",
+        "expiry": "2025-04-12",
+        "status": "active",
+        "cardType": "Credit Card",
+        "cardHolder": "Rajesh Khanna",
+        "cardLastFour": "7654",
+        "cardExpiry": "06/27",
+        "transactions": [
+          {
+            "date": "2025-02-12",
+            "amount": "799",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-10",
+            "amount": "799",
+            "method": "Credit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Anjali Desai",
+        "phone": "+91 32109 87654",
+        "email": "anjali.desai@example.com",
+        "dob": "1991-12-07",
+        "gender": "Female",
+        "expiry": "2025-03-29",
+        "status": "active",
+        "cardType": "UPI",
+        "cardHolder": "N/A",
+        "cardLastFour": "N/A",
+        "cardExpiry": "N/A",
+        "transactions": [
+          {
+            "date": "2025-02-28",
+            "amount": "49",
+            "method": "UPI",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-02-20",
+            "amount": "49",
+            "method": "UPI",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-02-13",
+            "amount": "49",
+            "method": "UPI",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "name": "Karan Malhotra",
+        "phone": "+91 21098 76543",
+        "email": "karan.malhotra@example.com",
+        "dob": "1987-03-18",
+        "gender": "Male",
+        "expiry": "2025-03-20",
+        "status": "active",
+        "cardType": "Credit Card",
+        "cardHolder": "Karan Malhotra",
+        "cardLastFour": "2345",
+        "cardExpiry": "10/25",
+        "transactions": [
+          {
+            "date": "2025-02-20",
+            "amount": "599",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-19",
+            "amount": "599",
+            "method": "Credit Card",
+            "status": "Failed"
+          },
+          {
+            "date": "2025-01-19",
+            "amount": "599",
+            "method": "Credit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Pooja Sharma",
+        "phone": "+91 10987 65432",
+        "email": "pooja.sharma@example.com",
+        "dob": "1993-06-29",
+        "gender": "Female",
+        "expiry": "2025-03-25",
+        "status": "inactive",
+        "cardType": "Debit Card",
+        "cardHolder": "Pooja Sharma",
+        "cardLastFour": "8901",
+        "cardExpiry": "05/26",
+        "transactions": [
+          {
+            "date": "2025-01-25",
+            "amount": "299",
+            "method": "Debit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-12-26",
+            "amount": "299",
+            "method": "Debit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "name": "Sanjay Mehta",
+        "phone": "+91 09876 54321",
+        "email": "sanjay.mehta@example.com",
+        "dob": "1984-10-03",
+        "gender": "Male",
+        "expiry": "2025-04-01",
+        "status": "active",
+        "cardType": "Credit Card",
+        "cardHolder": "Sanjay Mehta",
+        "cardLastFour": "6789",
+        "cardExpiry": "12/26",
+        "transactions": [
+          {
+            "date": "2025-02-01",
+            "amount": "1599",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-09-05",
+            "amount": "1599",
+            "method": "Credit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "name": "Meera Kapoor",
+        "phone": "+91 98765 43211",
+        "email": "meera.kapoor@example.com",
+        "dob": "1989-01-15",
+        "gender": "Female",
+        "expiry": "2025-03-03",
+        "status": "active",
+        "cardType": "UPI",
+        "cardHolder": "N/A",
+        "cardLastFour": "N/A",
+        "cardExpiry": "N/A",
+        "transactions": [
+          {
+            "date": "2025-02-03",
+            "amount": "399",
+            "method": "UPI",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-04",
+            "amount": "399",
+            "method": "UPI",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-12-05",
+            "amount": "399",
+            "method": "UPI",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "name": "Arjun Nair",
+        "phone": "+91 87654 12345",
+        "email": "arjun.nair@example.com",
+        "dob": "1986-08-17",
+        "gender": "Male",
+        "expiry": "2025-04-05",
+        "status": "active",
+        "cardType": "Debit Card",
+        "cardHolder": "Arjun Nair",
+        "cardLastFour": "5432",
+        "cardExpiry": "07/26",
+        "transactions": [
+          {
+            "date": "2025-02-05",
+            "amount": "349",
+            "method": "Debit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-06",
+            "amount": "349",
+            "method": "Debit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-12-07",
+            "amount": "349",
+            "method": "Debit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "name": "Divya Reddy",
+        "phone": "+91 76543 23456",
+        "email": "divya.reddy@example.com",
+        "dob": "1994-04-22",
+        "gender": "Female",
+        "expiry": "2025-03-18",
+        "status": "active",
+        "cardType": "Credit Card",
+        "cardHolder": "Divya Reddy",
+        "cardLastFour": "1122",
+        "cardExpiry": "03/27",
+        "transactions": [
+          {
+            "date": "2025-02-18",
+            "amount": "899",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-19",
+            "amount": "899",
+            "method": "Credit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "name": "Prakash Joshi",
+        "phone": "+91 65432 34567",
+        "email": "prakash.joshi@example.com",
+        "dob": "1981-12-09",
+        "gender": "Male",
+        "expiry": "2025-04-10",
+        "status": "active",
+        "cardType": "UPI",
+        "cardHolder": "N/A",
+        "cardLastFour": "N/A",
+        "cardExpiry": "N/A",
+        "transactions": [
+          {
+            "date": "2025-02-10",
+            "amount": "249",
+            "method": "UPI",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-11",
+            "amount": "249",
+            "method": "UPI",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-12-12",
+            "amount": "249",
+            "method": "UPI",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "name": "Kavita Iyer",
+        "phone": "+91 54321 45678",
+        "email": "kavita.iyer@example.com",
+        "dob": "1990-05-28",
+        "gender": "Female",
+        "expiry": "2025-03-09",
+        "status": "inactive",
+        "cardType": "Debit Card",
+        "cardHolder": "Kavita Iyer",
+        "cardLastFour": "3344",
+        "cardExpiry": "09/25",
+        "transactions": [
+          {
+            "date": "2025-01-09",
+            "amount": "499",
+            "method": "Debit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-12-10",
+            "amount": "499",
+            "method": "Debit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-11-11",
+            "amount": "499",
+            "method": "Debit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "name": "Rohan Dutta",
+        "phone": "+91 43210 56789",
+        "email": "rohan.dutta@example.com",
+        "dob": "1988-09-14",
+        "gender": "Male",
+        "expiry": "2025-05-01",
+        "status": "active",
+        "cardType": "Credit Card",
+        "cardHolder": "Rohan Dutta",
+        "cardLastFour": "5566",
+        "cardExpiry": "01/27",
+        "transactions": [
+          {
+            "date": "2025-02-01",
+            "amount": "1299",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-11-02",
+            "amount": "1299",
+            "method": "Credit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 18,
+        "name": "Ananya Mishra",
+        "phone": "+91 32109 67890",
+        "email": "ananya.mishra@example.com",
+        "dob": "1993-03-31",
+        "gender": "Female",
+        "expiry": "2025-03-22",
+        "status": "active",
+        "cardType": "UPI",
+        "cardHolder": "N/A",
+        "cardLastFour": "N/A",
+        "cardExpiry": "N/A",
+        "transactions": [
+          {
+            "date": "2025-02-22",
+            "amount": "149",
+            "method": "UPI",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-23",
+            "amount": "149",
+            "method": "UPI",
+            "status": "Failed"
+          },
+          {
+            "date": "2025-01-23",
+            "amount": "149",
+            "method": "UPI",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 19,
+        "name": "Varun Choudhary",
+        "phone": "+91 21098 78901",
+        "email": "varun.choudhary@example.com",
+        "dob": "1983-06-05",
+        "gender": "Male",
+        "expiry": "2025-04-15",
+        "status": "active",
+        "cardType": "Credit Card",
+        "cardHolder": "Varun Choudhary",
+        "cardLastFour": "7788",
+        "cardExpiry": "05/26",
+        "transactions": [
+          {
+            "date": "2025-02-15",
+            "amount": "699",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-16",
+            "amount": "699",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-12-17",
+            "amount": "699",
+            "method": "Credit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 20,
+        "name": "Shruti Agarwal",
+        "phone": "+91 10987 89012",
+        "email": "shruti.agarwal@example.com",
+        "dob": "1992-11-11",
+        "gender": "Female",
+        "expiry": "2025-03-30",
+        "status": "active",
+        "cardType": "Debit Card",
+        "cardHolder": "Shruti Agarwal",
+        "cardLastFour": "9900",
+        "cardExpiry": "08/26",
+        "transactions": [
+          {
+            "date": "2025-02-28",
+            "amount": "249",
+            "method": "Debit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-30",
+            "amount": "249",
+            "method": "Debit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 21,
+        "name": "Vivek Chauhan",
+        "phone": "+91 09876 90123",
+        "email": "vivek.chauhan@example.com",
+        "dob": "1987-07-23",
+        "gender": "Male",
+        "expiry": "2025-05-05",
+        "status": "inactive",
+        "cardType": "Credit Card",
+        "cardHolder": "Vivek Chauhan",
+        "cardLastFour": "1234",
+        "cardExpiry": "10/26",
+        "transactions": [
+          {
+            "date": "2025-01-05",
+            "amount": "999",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-12-06",
+            "amount": "999",
+            "method": "Credit Card",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-11-07",
+            "amount": "999",
+            "method": "Credit Card",
+            "status": "Successful"
+          }
+        ]
+      },
+      {
+        "id": 22,
+        "name": "Ritika Saxena",
+        "phone": "+91 98765 01234",
+        "email": "ritika.saxena@example.com",
+        "dob": "1991-02-18",
+        "gender": "Female",
+        "expiry": "2025-04-08",
+        "status": "active",
+        "cardType": "UPI",
+        "cardHolder": "N/A",
+        "cardLastFour": "N/A",
+        "cardExpiry": "N/A",
+        "transactions": [
+          {
+            "date": "2025-02-08",
+            "amount": "199",
+            "method": "UPI",
+            "status": "Successful"
+          },
+          {
+            "date": "2025-01-09",
+            "amount": "199",
+            "method": "UPI",
+            "status": "Successful"
+          },
+          {
+            "date": "2024-12-10",
+            "amount": "199",
+            "method": "UPI",
+            "status": "Successful"
+          }
+        ]
+      }
+    ]
+  }

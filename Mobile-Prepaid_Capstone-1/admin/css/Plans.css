@@ -1,0 +1,473 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --sidebar-width: 250px;
+    --sidebar-bg: c;
+    --sidebar-text: #ecf0f1;
+    --sidebar-hover: #34495e;
+    --transition-speed: 0.3s;
+    --primary-color: #3498db;
+    --secondary-color: #2e5bcc;
+    --danger-color: #e74c3c;
+    --warning-color: #f39c12;
+    --light-bg: #f8f9fa;
+    --border-color: #dee2e6;
+}
+
+/* Basic resets and layout */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-bg);
+    color: #333;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: var(--sidebar-width);
+    background: #2c3e50;
+    color: var(--sidebar-text);
+    padding: 15px;
+    transition: all var(--transition-speed) ease;
+    z-index: 1030;
+    height: 100vh;
+    position: fixed;
+    overflow-y: auto;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    transition: margin var(--transition-speed) ease;
+    width: calc(100% - var(--sidebar-width));
+}
+
+/* Sidebar header */
+.sidebar-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 0;
+    margin-bottom: 15px;
+    text-align: center;
+    position: relative;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.company-logo {
+    max-height: 40px;
+    display: block;
+    margin: 0 auto;
+}
+
+.toggle-sidebar-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: transparent;
+    border: none;
+    color: var(--sidebar-text);
+    cursor: pointer;
+}
+
+/* Admin profile section */
+.admin-profile {
+    margin: 20px 0;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-icon {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.profile-name {
+    font-weight: 500;
+}
+
+/* Menu sections */
+.menu-section {
+    margin-bottom: 20px;
+}
+
+.menu-header {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    opacity: 0.6;
+    padding-left: 10px;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    margin-bottom: 2px;
+}
+
+.nav-links li.active a {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left: 3px solid var(--primary-color);
+}
+
+.nav-links a {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.nav-links a:hover {
+    background-color: var(--sidebar-hover);
+}
+
+.nav-links a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Close button for mobile */
+.sidebar-close {
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: var(--sidebar-text);
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Main content layout */
+.content-wrapper {
+    padding: 20px;
+}
+
+/* Top navbar */
+.navbar {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.notification-badge {
+    transform: translate(-50%, -50%) !important;
+    padding: 0.15rem 0.4rem;
+    font-size: 0.6rem;
+}
+
+.notification-dropdown {
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.empty-notification {
+    color: #6c757d;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Card styling */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    overflow: hidden;
+    border: none;
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.5rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Plans display */
+.plans-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.plan-card {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.plan-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.plan-card.bestseller {
+    border-top: 3px solid var(--primary-color);
+}
+
+.plan-header {
+    padding: 1rem;
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.plan-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.bestseller-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 0 10px 0 10px;
+}
+
+.plan-body {
+    padding: 1rem;
+}
+
+.plan-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.plan-validity {
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+.plan-data {
+    margin-top: 0.5rem;
+    font-weight: 500;
+}
+
+.plan-benefits {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+}
+
+.plan-benefits ul {
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+/* Categories tabs */
+.categories-tabs .nav-tabs {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.categories-tabs .nav-link {
+    border: none;
+    color: #6c757d;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+}
+
+.categories-tabs .nav-link:hover {
+    border-color: rgba(52, 152, 219, 0.3);
+}
+
+.categories-tabs .nav-link.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+/* Modals */
+.modal-content {
+    border-radius: 10px;
+    border: none;
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.25rem;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+    padding: 1.25rem;
+}
+
+/* Toast notifications */
+.toast {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.toast-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Body class when sidebar is open (prevents scrolling) */
+body.sidebar-open {
+    overflow: hidden;
+}
+
+/* Responsive styles */
+@media (max-width: 991.98px) {
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: 1040;
+        transition: transform var(--transition-speed) ease;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+        width: 100%;
+    }
+    
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 1030;
+        transition: opacity var(--transition-speed) ease;
+        opacity: 0;
+    }
+    
+    .sidebar-overlay.show {
+        display: block;
+        opacity: 1;
+    }
+    
+    .sidebar-close {
+        display: block;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .sidebar {
+        width: 280px;
+        padding: 12px;
+    }
+    
+    .nav-links a {
+        padding: 12px 10px;
+        font-size: 15px;
+    }
+    
+    .nav-links a i {
+        font-size: 16px;
+    }
+    
+    .admin-profile {
+        padding: 10px 0;
+    }
+    
+    .profile-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
+    /* Adjust filters on smaller screens */
+    .d-flex.flex-wrap.gap-2 {
+        gap: 0.5rem !important;
+    }
+    
+    .form-select, .form-control, .input-group {
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Adjust plans display for smaller screens */
+    .plans-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 575.98px) {
+    /* Further adjustments for very small screens */
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+    
+    .btn {
+        padding: 0.375rem 0.5rem;
+    }
+    
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .sidebar {
+        width: 85%;
+        max-width: 300px;
+    }
+    
+    /* Stack action buttons on very small screens */
+    .d-flex.gap-2 {
+        flex-direction: column;
+        gap: 0.5rem !important;
+    }
+    
+    .d-flex.gap-2 .btn {
+        width: 100%;
+    }
+}

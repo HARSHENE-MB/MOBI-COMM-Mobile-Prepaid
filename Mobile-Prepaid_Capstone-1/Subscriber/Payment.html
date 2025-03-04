@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .payment-option {
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+        }
+        .payment-option:hover, .payment-option.active {
+            background-color: #f1f8ff;
+            border-color: #80bdff;
+        }
+        .payment-option img {
+            width: 30px;
+            margin-right: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover:not(:disabled) {
+            background-color: #0b5ed7;
+            border-color: #0b5ed7;
+            transform: translateY(-2px);
+        }
+        .btn-primary:disabled {
+            background-color: #cfe2ff;
+            border-color: #cfe2ff;
+            color: #0d6efd;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        .badge-primary {
+            background-color: #e7f1ff;
+            color: #0d6efd;
+            border-radius: 20px;
+            padding: 5px 10px;
+            font-weight: 500;
+        }
+        .badge-success {
+            background-color: #d1e7dd;
+            color: #146c43;
+            border-radius: 20px;
+            padding: 5px 10px;
+            font-weight: 500;
+        }
+        .bill-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #dee2e6;
+        }
+        .bill-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px solid #212529;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .plan-details {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .plan-details-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .plan-details-item:last-child {
+            border-bottom: none;
+        }
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #212529;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .card-title:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #0d6efd;
+            border-radius: 3px;
+        }
+        .bill-date {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+        .bill-brand {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .bill-brand img {
+            max-width: 120px;
+            opacity: 0.7;
+        }
+        .card-body {
+            padding: 25px;
+        }
+        /* Animation for payment form transition */
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .sticky-top {
+            top: 20px;
+        }
+        @media (max-width: 767.98px) {
+            .sticky-top {
+                position: relative;
+                top: 0;
+                margin-bottom: 20px;
+            }
+        }
+        /* Back button styles */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            font-weight: 500;
+            color: #0d6efd;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            color: #0a58ca;
+            transform: translateX(-3px);
+        }
+        .back-button i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Back Button -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <a href="javascript:history.back()" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Back to Previous Page
+                </a>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center mb-4">
+            <div class="col-12 text-center">
+                <!-- <h2 class="fw-bold">Complete Your Recharge</h2>
+                <p class="text-muted">Secure payment gateway</p> -->
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Payment Section -->
+            <div class="col-lg-7 col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Payment Method</h4>
+                        
+                        <!-- Selected Plan Summary -->
+                        <div class="alert alert-light border">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="mb-1" id="plan-name">Super Value Pack</h5>
+                                    <span class="badge-primary" id="plan-validity">28 days</span>
+                                    <span class="badge-success ms-2" id="plan-data">1.5GB/day</span>
+                                </div>
+                                <h5 class="mb-0 text-primary" id="plan-price">₹239</h5>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Options -->
+                        <div class="payment-options mt-4">
+                            <div class="payment-option d-flex align-items-center" onclick="activatePaymentOption(this, 'upi')">
+                                <img src="https://img.icons8.com/color/48/google-pay.png" alt="UPI">
+                                <div>
+                                    <h6 class="mb-0">UPI</h6>
+                                    <small class="text-muted">Pay via UPI ID</small>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-option d-flex align-items-center" onclick="activatePaymentOption(this, 'card')">
+                                <img src="https://img.icons8.com/color/48/visa.png" alt="Card">
+                                <div>
+                                    <h6 class="mb-0">Credit/Debit Card</h6>
+                                    <small class="text-muted">Visa, Mastercard, RuPay</small>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-option d-flex align-items-center" onclick="activatePaymentOption(this, 'bank')">
+                                <img src="https://img.icons8.com/color/48/bank.png" alt="Bank">
+                                <div>
+                                    <h6 class="mb-0">Net Banking</h6>
+                                    <small class="text-muted">All major banks supported</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Forms -->
+                        <div id="payment-forms" class="mt-4">
+                            <!-- UPI Form -->
+                            <div id="upi-form" class="payment-form hidden fade-in">
+                                <h5 class="mb-3">Enter UPI ID</h5>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="upi-id" placeholder="name@upi" onkeyup="validateUPI()">
+                                    <label for="upi-id">UPI ID</label>
+                                </div>
+                                <small id="upi-error" class="text-danger"></small>
+                                <button class="btn btn-primary w-100 mt-3" id="upi-pay-btn" onclick="redirectToSuccess()" disabled>
+                                    <i class="fas fa-lock me-2"></i>Pay Securely
+                                </button>
+                            </div>
+                            
+                            <!-- Card Form -->
+                            <div id="card-form" class="payment-form hidden fade-in">
+                                <h5 class="mb-3">Enter Card Details</h5>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                                    <label for="cardNumber">Card Number</label>
+                                </div>
+                                <small id="card-error" class="text-danger"></small>
+                                
+                                <div class="row">
+                                    <div class="col-7">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" onkeyup="validateCard()">
+                                            <label for="expiryDate">Expiry (MM/YY)</label>
+                                        </div>
+                                        <small id="expiry-error" class="text-danger"></small>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="cvv" placeholder="CVV" maxlength="4" onkeyup="validateCard()">
+                                            <label for="cvv">CVV</label>
+                                        </div>
+                                        <small id="cvv-error" class="text-danger"></small>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn btn-primary w-100 mt-3" id="card-pay-btn" onclick="redirectToSuccess()" disabled>
+                                    <i class="fas fa-lock me-2"></i>Pay Securely
+                                </button>
+                            </div>
+                            
+                            <!-- Bank Form -->
+                            <div id="bank-form" class="payment-form hidden fade-in">
+                                <h5 class="mb-3">Enter Bank Details</h5>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="bankAccount" placeholder="Account Number" onkeyup="validateBank()">
+                                    <label for="bankAccount">Account Number</label>
+                                </div>
+                                <small id="bank-error" class="text-danger"></small>
+                                
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="ifscCode" placeholder="IFSC Code" onkeyup="validateBank()">
+                                    <label for="ifscCode">IFSC Code</label>
+                                </div>
+                                <small id="ifsc-error" class="text-danger"></small>
+                                
+                                <button class="btn btn-primary w-100 mt-3" id="bank-pay-btn" onclick="redirectToSuccess()" disabled>
+                                    <i class="fas fa-lock me-2"></i>Pay Securely
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bill Section -->
+            <div class="col-lg-5 col-md-6">
+                <div class="card sticky-top">
+                    <div class="card-body">
+                        <h4 class="card-title">Bill Summary</h4>
+                        <p class="bill-date" id="bill-date">February 27, 2025</p>
+                        
+                        <div class="bill-details">
+                            <div class="bill-item">
+                                <span>Plan:</span>
+                                <span id="bill-plan-name">Super Value Pack</span>
+                            </div>
+                            <div class="bill-item">
+                                <span>Base Amount:</span>
+                                <span id="bill-base-amount">₹239.00</span>
+                            </div>
+                            <div class="bill-item">
+                                <span>GST (18%):</span>
+                                <span id="bill-gst">₹43.02</span>
+                            </div>
+                            <div class="bill-total">
+                                <span>Total Amount:</span>
+                                <span id="bill-total" class="text-primary">₹282.02</span>
+                            </div>
+                        </div>
+                        
+                        <div class="plan-details mt-4">
+                            <h5 class="mb-3">Plan Benefits</h5>
+                            <div class="plan-details-item d-flex justify-content-between">
+                                <span><i class="fas fa-wifi me-2 text-primary"></i>Data:</span>
+                                <span id="bill-data" class="fw-medium">1.5GB/day</span>
+                            </div>
+                            <div class="plan-details-item d-flex justify-content-between">
+                                <span><i class="fas fa-calendar-alt me-2 text-primary"></i>Validity:</span>
+                                <span id="bill-validity" class="fw-medium">28 days</span>
+                            </div>
+                            <div class="plan-details-item d-flex justify-content-between">
+                                <span><i class="fas fa-gift me-2 text-primary"></i>Benefits:</span>
+                                <span id="bill-benefits" class="fw-medium">Unlimited Calls, 100 SMS/day</span>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center justify-content-center gap-2 mt-4">
+                            <i class="fas fa-lock text-success"></i>
+                            <span class="small text-muted">Secure Payment</span>
+                            <i class="fas fa-shield-alt text-success ms-3"></i>
+                            <span class="small text-muted">100% Safe</span>
+                        </div>
+                        
+                        <div class="bill-brand">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img src="https://img.icons8.com/color/48/visa.png" alt="Visa">
+                                </div>
+                                <div class="col-4">
+                                    <img src="https://img.icons8.com/color/48/mastercard.png" alt="Mastercard">
+                                </div>
+                                <div class="col-4">
+                                    <img src="https://img.icons8.com/color/48/rupay.png" alt="RuPay">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load recharge plans data
+        const rechargePlans = {
+            "recharge_plans": [
+                {
+                    "category": "Popular Plans",
+                    "plans": [
+                        { "id": 501, "name": "Super Value Pack", "price": 239, "data": "1.5GB/day", "validity": "28 days", "benefits": "Unlimited Calls, 100 SMS/day", "bestseller": true, "description": "Perfect for daily users with moderate data needs." },
+                        { "id": 502, "name": "Power Pack Premium", "price": 349, "data": "2GB/day", "validity": "28 days", "benefits": "Unlimited Calls, Amazon Prime", "bestseller": true, "description": "Our most popular plan for digital enthusiasts." },
+                        { "id": 503, "name": "Ultra Data Pack", "price": 399, "data": "3GB/day", "validity": "28 days", "benefits": "Unlimited Calls, 100 SMS/day, Prime Video", "bestseller": false, "description": "High-speed data allocation with unlimited calling benefits." }
+                    ]
+                }
+                // More categories would be here...
+            ]
+        };
+
+        // Function to get URL parameters
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                planId: params.get('planId'),
+                plan: params.get('plan'),
+                price: params.get('price'),
+                data: params.get('data'),
+                validity: params.get('validity'),
+                benefits: params.get('benefits')
+            };
+        }
+
+        // Find plan by ID
+        function findPlanById(planId) {
+            if (!planId) return null;
+            
+            for (let category of rechargePlans.recharge_plans) {
+                for (let plan of category.plans) {
+                    if (plan.id == planId) {
+                        return plan;
+                    }
+                }
+            }
+            return null;
+        }
+
+        // Display plan details on the payment page
+        function displayPlanDetails() {
+            const params = getQueryParams();
+            let planDetails;
+            
+            // Check if we have planId or plan name
+            if (params.planId) {
+                planDetails = findPlanById(params.planId);
+            } 
+            
+            // If no planId or plan not found, use direct parameters
+            if (!planDetails && params.plan && params.price) {
+                planDetails = {
+                    name: params.plan,
+                    price: params.price,
+                    data: params.data || "1.5GB/day",
+                    validity: params.validity || "28 days",
+                    benefits: params.benefits || "Unlimited Calls, 100 SMS/day"
+                };
+            }
+            
+            // Use default plan if no parameters provided
+            if (!planDetails) {
+                planDetails = {
+                    name: "Super Value Pack",
+                    price: 239,
+                    data: "1.5GB/day",
+                    validity: "28 days",
+                    benefits: "Unlimited Calls, 100 SMS/day"
+                };
+            }
+
+            // Update plan details section
+            document.getElementById('plan-name').textContent = planDetails.name;
+            document.getElementById('plan-price').textContent = `₹${planDetails.price}`;
+            document.getElementById('plan-data').textContent = planDetails.data;
+            document.getElementById('plan-validity').textContent = planDetails.validity;
+            
+            // Update bill section
+            document.getElementById('bill-plan-name').textContent = planDetails.name;
+            document.getElementById('bill-data').textContent = planDetails.data;
+            document.getElementById('bill-validity').textContent = planDetails.validity;
+            document.getElementById('bill-benefits').textContent = planDetails.benefits;
+            
+            // Calculate bill amounts
+            const baseAmount = parseFloat(planDetails.price);
+            const gst = baseAmount * 0.18;
+            const total = baseAmount + gst;
+            
+            document.getElementById('bill-base-amount').textContent = `₹${baseAmount.toFixed(2)}`;
+            document.getElementById('bill-gst').textContent = `₹${gst.toFixed(2)}`;
+            document.getElementById('bill-total').textContent = `₹${total.toFixed(2)}`;
+            
+            // Set current date
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('bill-date').textContent = formattedDate;
+        }
+
+        // Activate payment option and show relevant form
+        function activatePaymentOption(element, method) {
+            // Remove active class from all options
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            
+            // Add active class to selected option
+            element.classList.add('active');
+            
+            // Hide all forms
+            document.querySelectorAll('.payment-form').forEach(form => {
+                form.classList.add('hidden');
+            });
+            
+            // Show selected form
+            const selectedForm = document.getElementById(method + '-form');
+            selectedForm.classList.remove('hidden');
+        }
+
+        // UPI Validation
+        function validateUPI() {
+            let upiID = document.getElementById("upi-id").value;
+            let error = document.getElementById("upi-error");
+            let payBtn = document.getElementById("upi-pay-btn");
+            let regex = /^[a-zA-Z0-9.-]+@[a-zA-Z]+$/;
+
+            if (!regex.test(upiID)) {
+                error.innerHTML = "Invalid UPI ID! Example: yourname@upi";
+                payBtn.disabled = true;
+            } else {
+                error.innerHTML = "";
+                payBtn.disabled = false;
+            }
+        }
+
+        // Card Validation (Auto-formatting card number)
+        document.getElementById('cardNumber').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 16) value = value.slice(0, 16);
+            e.target.value = value.replace(/(\d{4})/g, '$1 ').trim();
+            validateCard();
+        });
+
+        // Format expiry date as MM/YY
+        document.getElementById('expiryDate').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 4) value = value.slice(0, 4);
+            if (value.length > 2) {
+                e.target.value = value.slice(0, 2) + '/' + value.slice(2);
+            } else {
+                e.target.value = value;
+            }
+            validateCard();
+        });
+
+        function validateCard() {
+            let cardNumber = document.getElementById("cardNumber").value.replace(/\s/g, '');
+            let expiry = document.getElementById("expiryDate").value;
+            let cvv = document.getElementById("cvv").value;
+            let payBtn = document.getElementById("card-pay-btn");
+
+            let cardError = document.getElementById("card-error");
+            let expiryError = document.getElementById("expiry-error");
+            let cvvError = document.getElementById("cvv-error");
+
+            let cardRegex = /^\d{16}$/;
+            let expiryRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+            let cvvRegex = /^\d{3,4}$/;
+
+            let isValid = true;
+
+            if (!cardRegex.test(cardNumber)) {
+                cardError.innerHTML = "Invalid Card Number! Must be 16 digits.";
+                isValid = false;
+            } else {
+                cardError.innerHTML = "";
+            }
+
+            if (!expiryRegex.test(expiry)) {
+                expiryError.innerHTML = "Invalid Expiry Date! Use MM/YY format.";
+                isValid = false;
+            } else {
+                expiryError.innerHTML = "";
+            }
+
+            if (!cvvRegex.test(cvv)) {
+                cvvError.innerHTML = "Invalid CVV! Must be 3 or 4 digits.";
+                isValid = false;
+            } else {
+                cvvError.innerHTML = "";
+            }
+
+            payBtn.disabled = !isValid;
+        }
+
+        // Bank Validation
+        function validateBank() {
+            let bankAcc = document.getElementById("bankAccount").value;
+            let ifsc = document.getElementById("ifscCode").value;
+            let payBtn = document.getElementById("bank-pay-btn");
+
+            let bankError = document.getElementById("bank-error");
+            let ifscError = document.getElementById("ifsc-error");
+
+            let bankRegex = /^\d{9,18}$/;
+            let ifscRegex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+
+            let isValid = true;
+
+            if (!bankRegex.test(bankAcc)) {
+                bankError.innerHTML = "Invalid Bank Account Number! Must be 9-18 digits.";
+                isValid = false;
+            } else {
+                bankError.innerHTML = "";
+            }
+
+            if (!ifscRegex.test(ifsc)) {
+                ifscError.innerHTML = "Invalid IFSC Code! Example: HDFC0001234";
+                isValid = false;
+            } else {
+                ifscError.innerHTML = "";
+            }
+
+            payBtn.disabled = !isValid;
+        }
+
+        // Redirect function
+        function redirectToSuccess() {
+            // Show loading state
+            const activePayBtn = document.querySelector('.btn-primary:not([disabled])');
+            if (activePayBtn) {
+                activePayBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
+                activePayBtn.disabled = true;
+            }
+            
+            setTimeout(() => {
+                window.location.href = "./Payment-successful.html";
+            }, 1500);
+        }
+
+        // Initialize page
+        window.onload = function() {
+            displayPlanDetails();
+        };
+    </script>
+</body>
+</html>

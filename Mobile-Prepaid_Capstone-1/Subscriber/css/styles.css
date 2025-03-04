@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+*{
+    font-family: "Poppins", serif;
+}
+
+/* Navbar */
+.navbar {
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0%;
+  z-index: 1000;
+  background-color: white; 
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+body {
+  padding-top: 80px; /* Adjust based on navbar height */
+  }
+  
+  .carousel {
+  margin-top: 10px; /* Optional: Extra spacing */
+  }
+  
+.navbar-nav .nav-link {
+  font-size: 16px;
+  font-weight: 500;
+  color: black;
+  margin-right: 15px;
+}
+
+.navbar .nav-link:hover {
+  color: red;
+}
+
+.navbar .text-danger {
+  font-weight: bold;
+}
+
+
+/* Content Wrapper (Container) */
+.content-wrapper {
+  border-radius: 30px;
+  background: #ffffff;
+  padding: 30px;
+  max-width: 800px; /* Slightly wider */
+  width: 85%;
+  margin: 100px auto; /* Increased top margin */
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.content-wrapper {
+  margin-top: 180px; /* Adjust this value as needed */
+}
+
+
+/* Left Panel */
+.left-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  overflow: hidden;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.left-panel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+/* Form Card */
+.card {
+  max-width: 420px;
+  width: 100%;
+  border-radius: 12px;
+  background: #f8f9fa;
+}
+
+/* Input Fields */
+.input-group input {
+  border-radius: 5px;
+}
+
+/* Buttons */
+.btn-danger {
+  border-radius: 5px;
+}
+
+.btn-secondary {
+  border-radius: 5px;
+  background: #454343;
+}
+
+
+/* Apply the background gradient to the whole page */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent scrolling */
+  background: linear-gradient(to right, #2c2c2c, #493f3f, red);
+}
+
+
+/* Main Section - Full screen, no scroll */
+.main-section {
+  width: 100%;
+  height: 100vh; /* Full screen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Right Panel */
+.col-md-6 {
+  padding: 10px;
+}
+
+
+.otp-input {
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  text-align: center;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.otp-input:focus {
+  border-color: red;
+}
+
+/* Disable Verify OTP button by default
+button:disabled {
+  background-color: #ccc !important;
+  border: 2px solid #ddd;
+  cursor: not-allowed;
+  opacity: 0.7;
+  pointer-events: none; /* Completely disable clicks */
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content-wrapper {
+      flex-direction: column;
+      border-radius: 20px;
+  }
+
+  .left-panel {
+      width: 100%;
+      border-radius: 20px 20px 0 0;
+  }
+
+  .col-md-6 {
+      width: 100%;
+      text-align: center;
+  }
+
+  .card {
+      width: 90%;
+      margin: auto;
+  }
+}
+
+/*for logout,profile*/
+.dropdown-menu {
+  min-width: 110px; /* Reduce width slightly */
+  padding: 4px 0; /* Adjust padding */
+  font-size: 0.8rem; /* Reduce font size */
+}
+
+.dropdown-item {
+  padding: 6px 10px; /* Reduce padding */
+  font-size: 0.8rem; /* Make text smaller */
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.dropdown-menu.show {
+  display: block;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  z-index: 1000;
+  border-radius: 4px; /* Optional: Round corners */
+}
+
+.dropdown-item:hover {
+  background: linear-gradient(to right, #f32929, #f06b6b);
+  color: #ffffff;
+}
