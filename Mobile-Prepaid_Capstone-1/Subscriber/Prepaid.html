@@ -13,7 +13,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="./asserts/logo-finalz.png" alt="Logo" height="50" width="100">
+                <img src="./assets/logo-finalz.png" alt="Logo" height="50" width="100">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -23,16 +23,39 @@
                     <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="./Prepaid.html">Prepaid</a></li>
                     <li class="nav-item"><a class="nav-link" href="./index.html#zen">Recharge</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Help</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./Help.html">Help</a></li>
                 </ul>
                 <div class="d-flex align-items-center">
-                    <a href="phone.html" class="nav-link text-danger">
-                        <i class="bi bi-person"></i>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="black" class="bi bi-person" viewBox="0 0 16 16">
-                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                        </svg>
-                    </a>
+                    <div class="dropdown" id="profile-dropdown">
+                        <!-- Profile icon or username will be updated dynamically -->
+                        <a href="#" class="nav-link" id="profile-toggle">
+                            <span id="profile-content">
+                                <i class="bi bi-person fs-4"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="black" class="bi bi-person" viewBox="0 0 16 16">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                                </svg>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu" id="dropdown-menu">
+                            <a class="dropdown-item" href="./Profile2.html">My Profile</a>
+                            <a class="dropdown-item" href="#" id="logout-btn">Logout</a>
+                        </div>
+                    </div>
                 </div>
+                
+                
+                        <!-- Hover Dropdown -->
+                        <!-- <div class="dropdown-menu" id="userDropdown">
+                            <div class="user-info">
+                                <p id="userName">Guest</p>
+                                <p id="userEmail"></p>
+                            </div>
+                            <button id="logoutBtn" class="logout-button">Sign Out</button>
+                        </div> -->
+                    </div>
+                </div>
+                
+                
             </div>
         </div>
     </nav>
@@ -66,43 +89,33 @@
         </div>
     </div>
 
-    <!-- Plans -->
-    <div class="container">
+     <!-- Plans -->
+     <div class="container">
         <div class="row">
             <!-- Left Sidebar -->
             <div class="col-md-3">
-                <div class="list-group">
-                    <button id="all-plans-btn" class="list-group-item list-group-item-action active" onclick="filterPlans(null, this)">All Plans</button>
-                    <button class="list-group-item list-group-item-action" onclick="filterPlans('Family Plan', this)">Family Plan</button>
-                    <button class="list-group-item list-group-item-action" onclick="filterPlans('Data Validity Plan', this)">Data Validity Plan</button>
-                    <button class="list-group-item list-group-item-action" onclick="filterPlans('Study Plan', this)">Study Plan</button>
-                    <button class="list-group-item list-group-item-action" onclick="filterPlans('Entertainment', this)">Entertainment</button>
-                    <button class="list-group-item list-group-item-action" onclick="filterPlans('Budget Plans', this)">Budget Plans</button>
-                    <button class="list-group-item list-group-item-action" onclick="filterPlans('Data Boosters', this)">Data Boosters</button>
-                    <button class="list-group-item list-group-item-action" onclick="filterPlans('Popular Plans', this)">Popular Plans</button>
+                <div class="list-group" id="plans-list">
+                    <!-- Categories will be loaded here -->
                 </div>
             </div>
 
+            <!-- Plans Container -->
             <div class="col-md-9 mt-md-0 mt-4">
                 <div id="plans-container" class="row">
+                    <!-- Plans will be loaded here -->
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Toast Container -->
     <div id="toast-container" class="toast-container"></div>
 
-    <div id="plan-details-modal" class="modal">
-    </div>
+    <!-- Plan Details Modal -->
+    <div id="plan-details-modal" class="modal"></div>
 
-    <div id="login-prompt-modal" class="modal">
-        
-    </div>
-
-   
-    <div id="filter-modal" class="modal">
-       
-    </div>
-
+    <!-- Filter Modal -->
+    <div id="filter-modal" class="modal"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./js/Prepaid.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./js/Prepaid2.js"></script>

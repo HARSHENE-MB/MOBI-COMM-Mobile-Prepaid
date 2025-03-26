@@ -5,6 +5,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const usernameError = document.getElementById("username-error");
     const passwordError = document.getElementById("password-error");
 
+    if (!loginForm || !usernameInput || !passwordInput) {
+        console.error("One or more elements not found. Check your HTML IDs.");
+        return;
+    }
+
     function showError(input, message, errorElement) {
         errorElement.textContent = message;
         errorElement.style.display = "block";
@@ -31,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let isValid = true;
 
         if (!username) {
-            showError(usernameInput, "Admin Name cannot be empty.", usernameError);
+            showError(usernameInput, "Username cannot be empty.", usernameError);
             isValid = false;
         } else {
             hideError(usernameInput, usernameError);
@@ -41,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
             showError(passwordInput, "Password cannot be empty.", passwordError);
             isValid = false;
         } else if (!validatePassword(password)) {
-            showError(passwordInput, "Password must have 1 uppercase, 1 lowercase, 1 number, 1 special character, and be at least 8 characters.", passwordError);
+            showError(passwordInput, "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.", passwordError);
             isValid = false;
         } else {
             hideError(passwordInput, passwordError);
@@ -57,38 +62,40 @@ document.addEventListener("DOMContentLoaded", function () {
         const username = usernameInput.value.trim();
         const password = passwordInput.value.trim();
 
-        let valid = true;
-
-        if (username !== "admin") {
-            showError(usernameInput, "Incorrect Admin Name!", usernameError);
-            valid = false;
-        }
-
-        if (password !== "Admin@123") {
-            showError(passwordInput, "Invalid Password!", passwordError);
-            valid = false;
-        }
-
-        if (valid) {
+        // Hardcoded admin login check
+        if (username === "Admin" && password === "Admin@123") {
             localStorage.setItem("adminLoggedIn", "true");
             localStorage.setItem("adminName", username);
             window.location.href = "./admin-dashboard.html";
+            return;
         }
+
+        // Dynamic login via API (Replace with actual backend endpoint)
+        fetch("admin-login-endpoint", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                localStorage.setItem("adminLoggedIn", "true");
+                localStorage.setItem("adminName", username);
+                window.location.href = "./admin-dashboard.html";
+            } else {
+                showError(usernameInput, "Incorrect username or password.", usernameError);
+                showError(passwordInput, "Incorrect username or password.", passwordError);
+            }
+        })
+        .catch(() => {
+            showError(usernameInput, "Error connecting to server.", usernameError);
+        });
     });
 
-    usernameInput.addEventListener("input", function () {
-        if (usernameInput.value.trim()) {
-            hideError(usernameInput, usernameError);
-        }
-    });
-
+    usernameInput.addEventListener("input", () => hideError(usernameInput, usernameError));
     passwordInput.addEventListener("input", function () {
-        const password = passwordInput.value.trim();
-
-        if (!password) {
-            showError(passwordInput, "Password cannot be empty.", passwordError);
-        } else if (!validatePassword(password)) {
-            showError(passwordInput, "Password must have 1 uppercase, 1 lowercase, 1 number, 1 special character, and be at least 8 characters.", passwordError);
+        if (!validatePassword(passwordInput.value.trim())) {
+            showError(passwordInput, "Password must meet the criteria.", passwordError);
         } else {
             hideError(passwordInput, passwordError);
         }

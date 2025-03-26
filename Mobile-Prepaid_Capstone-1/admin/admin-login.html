@@ -14,18 +14,17 @@
         <form id="loginForm" novalidate>
             <div class="mb-3">
                 <label for="username" class="form-label">Admin Name</label>
-                <input type="text" id="username" class="form-control" placeholder="Enter admin name">
+                <input type="text" id="username" class="form-control" placeholder="Enter admin name" autocomplete="username">
                 <div class="invalid-feedback" id="username-error"></div>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" class="form-control" placeholder="Enter password">
+                <input type="password" id="password" class="form-control" placeholder="Enter password" autocomplete="current-password">
                 <div class="invalid-feedback" id="password-error"></div>
             </div>
             <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
     </div>
-
     <script src="./js/admin-login.js"></script>
 </body>
 </html>

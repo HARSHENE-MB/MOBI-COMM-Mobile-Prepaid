@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="./css/styles.css">
+
 </head>
 <body>
 
@@ -17,7 +18,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="./asserts/logo-finalz.png" alt="Logo" height="50" width="100"> <!-- Replace with your logo -->
+                <img src="./assets/logo-finalz.png" alt="Logo" height="50" width="100"> <!-- Replace with your logo -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -29,7 +30,7 @@
                     <li class="nav-item">
                         <a class="nav-link text-decoration-none text-reset" href="./index.html#zen">Recharge</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="#">Help</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./Help.html">Help</a></li>
                 </ul>
                 <div class="d-flex align-items-center">
                     <a href="phone.html" class="nav-link text-danger">
@@ -49,7 +50,7 @@
             <div class="row">
                 <!-- Left Side (Image) -->
                 <div class="col-md-6 left-panel">
-                    <img src="./asserts/photo-otp.png" class="img-fluid rounded-left">
+                    <img src="./assets/photo-otp.png" class="img-fluid rounded-left">
                 </div>
 
                 <!-- Right Side (Form) -->
@@ -68,104 +69,7 @@
         </div>
     </section>
 
-    <script>
-
-document.addEventListener("DOMContentLoaded", function() {
-    // Reset redirect counter when reaching phone.html properly
-    localStorage.setItem("redirectCount", "0");
-    
-    // Redirect to profile if already logged in
-    if (localStorage.getItem("isLoggedIn") === "true") {
-        window.location.href = "Profile.html";
-        return;
-    }
-    
-    const phoneInput = document.getElementById("phone");
-    const generateOtpBtn = document.querySelector("#phoneForm button");
-    
-    // Create an error message element if it doesn't exist
-    let errorMessage = document.getElementById("error-message");
-    if (!errorMessage) {
-        errorMessage = document.createElement("div");
-        errorMessage.id = "error-message";
-        errorMessage.style.color = "red";
-        errorMessage.style.marginTop = "10px";
-        // Insert it after the phone input
-        phoneInput.parentNode.insertBefore(errorMessage, phoneInput.nextSibling);
-    }
-    
-    // Disable button initially
-    generateOtpBtn.disabled = true;
-    
-    // Enable button only if valid phone number is entered
-    phoneInput.addEventListener("input", function() {
-        generateOtpBtn.disabled = !/^\d{10}$/.test(phoneInput.value);
-        // Clear error message when user starts typing again
-        errorMessage.textContent = "";
-    });
-    
-    document.getElementById("phoneForm").addEventListener("submit", async function(event) {
-        event.preventDefault();
-        const phone = phoneInput.value;
-        
-        if (!/^\d{10}$/.test(phone)) {
-            errorMessage.textContent = "Please enter a valid 10-digit phone number.";
-            return;
-        }
-        try {
-    const response = await fetch("./js/Subscriber.json");
-    const data = await response.json();
-    const user = data.users.find(user => user.phone === phone);
-    
-    if (!user) {
-        errorMessage.innerHTML = `
-            <div class="alert alert-danger d-flex align-items-center p-2 mt-2 shadow-sm" role="alert" 
-                 style="font-size: 14px; border-radius: 5px;">
-                <i class="fas fa-exclamation-circle me-2"></i> 
-                Phone number not registered. Please enter a valid Mobi Comm Number.
-            </div>`;
-        return;
-    }
-} catch (error) {
-    console.error("Error fetching user data:", error);
-    errorMessage.innerHTML = `
-        <div class="alert alert-warning d-flex align-items-center p-2 mt-2 shadow-sm" role="alert" 
-             style="font-size: 14px; border-radius: 5px;">
-            <i class="fas fa-exclamation-triangle me-2"></i> 
-            An error occurred. Please try again.
-        </div>`;
-    return;
-}
-
-        
-        // Generate and store OTP for valid user
-        const otp = Math.floor(1000 + Math.random() * 9000);
-        localStorage.setItem("otp", otp.toString());
-        localStorage.setItem("phone", phone);
-
-        // Create popup notification 
-        let otpPopup = document.createElement("div");
-        otpPopup.id = "otp-popup";
-        otpPopup.style.position = "fixed";
-        otpPopup.style.top = "20px";
-        otpPopup.style.left = "50%";
-        otpPopup.style.transform = "translateX(-50%)";
-        otpPopup.style.backgroundColor = "#ffeeee";
-        otpPopup.style.color = "#d9534f";
-        otpPopup.style.padding = "10px 20px";
-        otpPopup.style.borderRadius = "4px";
-        otpPopup.style.boxShadow = "0 2px 5px rgba(0,0,0,0.2)";
-        otpPopup.style.zIndex = "1000";
-        otpPopup.textContent = `OTP Sent: ${otp}`; 
-        document.body.appendChild(otpPopup);
-
-        // Hide popup after 3 seconds and navigate to OTP page
-        setTimeout(() => {
-            otpPopup.remove();
-            window.location.href = "otp.html";
-        }, 3000);
-            });
-        });
+    <script src="/Mobile-Prepaid_Capstone-1/Subscriber/js/Phone.js">
     </script>
 
 </body>

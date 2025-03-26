@@ -1,80 +1,52 @@
- // Load user data from JSON
- async function loadUserData() {
-    try {
-        const response = await fetch('./Subscriber.json');
-        const userData = await response.json();
-        return userData;
-    } catch (error) {
-        console.error('Error loading user data:', error);
-        return null;
-    }
-}
-
 // Initialize the application
 document.addEventListener("DOMContentLoaded", async function() {
     // Check if user is logged in
     let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    let userData = null;
-    let userPhone = localStorage.getItem("phone") || "";
-    
+    let userDetails = JSON.parse(localStorage.getItem("userDetails")) || null;
+
     // Redirect to login if not logged in
     if (!isLoggedIn) {
         window.location.href = "phone.html";
         return;
     }
-    
-    // Try to load user data
-    try {
-        userData = await loadUserData();
-    } catch (error) {
-        console.log("Could not load user data, using defaults");
-    }
-    
+
     // Update UI based on login status
-    updateAuthUI(isLoggedIn);
-    
+    updateAuthUI(isLoggedIn, userDetails.fullName);
+
     // Load default content (profile)
-    loadContent('profile');
-    
+    loadContent('profile', userDetails);
+
     // Attach event listener for logout
     document.getElementById("logout-btn").addEventListener("click", logout);
-    
+
+    // Attach event listener for profile link
+    document.getElementById("profile-link").addEventListener("click", function() {
+        loadContent('profile', userDetails);
+    });
+
     // Setup FAQ toggle functionality
     setupFAQToggle();
 });
 
 // Load the user profile with actual data
-function loadUserProfile(phoneNumber, userData) {
-    let user = null;
-    
-    if (userData && Array.isArray(userData)) {
-        user = userData.find(u => u.phoneNumber === phoneNumber);
-    }
-    
-    // Default user if not found in data
-    if (!user) {
-        user = {
-            name: "Harshene",
-            phoneNumber: phoneNumber || localStorage.getItem("phone") || "9876543210",
-            joinDate: "January 2023"
-        };
-    }
-    
+function loadUserProfile(userDetails) {
     // Update displayed user name
     const userProfileInfo = document.getElementById("user-profile-info");
     if (userProfileInfo) {
         userProfileInfo.innerHTML = `
-            <p><strong>Name:</strong> ${user.name}</p>
-            <p><strong>Number:</strong> ${user.phoneNumber}</p>
+            <p><strong>Name:</strong> ${userDetails.fullName}</p>
+            <p><strong>Number:</strong> ${userDetails.phoneNumber}</p>
             <p><strong>Account Type:</strong> Prepaid</p>
             <p><strong>Status:</strong> <span class="badge bg-success">Active</span></p>
-            <p><strong>Joined:</strong> ${user.joinDate || "January 2023"}</p>
+            <p><strong>Joined:</strong> ${userDetails.registeredAt || "January 2023"}</p>
+            <p><strong>Email:</strong> ${userDetails.email}</p>
+            <p><strong>Address:</strong> ${userDetails.address.street}, ${userDetails.address.city}, ${userDetails.address.state}, ${userDetails.address.country}, ${userDetails.address.pinCode}</p>
         `;
     }
 }
 
 // Update Authentication UI
-function updateAuthUI(isLoggedIn) {
+function updateAuthUI(isLoggedIn, fullName) {
     const loginBtn = document.getElementById("login-btn");
     const profileDropdown = document.getElementById("profile-dropdown");
 
@@ -84,6 +56,10 @@ function updateAuthUI(isLoggedIn) {
     
     if (profileDropdown) {
         profileDropdown.style.display = isLoggedIn ? "inline-block" : "none";
+        const profileLink = profileDropdown.querySelector('a.nav-link');
+        if (profileLink) {
+            profileLink.innerHTML = `<i class="bi bi-person fs-4"></i> ${fullName}`;
+        }
     }
 }
 
@@ -105,16 +81,11 @@ function toggleDropdown() {
     }
 }
 
-// Logout functionality
 function logout() {
-    // Clear all authentication data
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("phone");
-    localStorage.removeItem("otp");
-    
-    // Redirect to login page
+    localStorage.clear();
     window.location.href = "index.html";
-}
+}  
+
 
 // Setup FAQ toggle functionality
 function setupFAQToggle() {
@@ -147,12 +118,12 @@ function setupFAQToggle() {
 function highlightActiveLink(section) {
     // Get all sidebar links
     const links = document.querySelectorAll('.sidebar a');
-    
+
     // Remove active class from all links
     links.forEach(link => {
         link.classList.remove('active');
     });
-    
+
     // Add active class to the clicked link
     const linkId = section + '-link';
     const activeLink = document.getElementById(linkId);
@@ -162,68 +133,61 @@ function highlightActiveLink(section) {
 }
 
 // Generate and download invoice PDF
-function downloadInvoice() {
+function downloadInvoice(number, date, total) {
     try {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        
+
         // Add header
         doc.setFontSize(22);
         doc.setTextColor(220, 53, 69);
         doc.text("Your Telecom", 105, 20, { align: 'center' });
-        
+
         doc.setFontSize(16);
         doc.setTextColor(100, 100, 100);
         doc.text("Invoice Receipt", 105, 30, { align: 'center' });
-        
+
         // Add separator line
         doc.setDrawColor(220, 53, 69);
         doc.setLineWidth(0.5);
         doc.line(20, 35, 190, 35);
-        
+
         // Add customer info
         doc.setFontSize(12);
         doc.setTextColor(0, 0, 0);
         doc.text("Invoice To:", 20, 50);
-        
+
         let userName = "Harshene";
         let userPhone = localStorage.getItem("phone") || "9876543210";
-        
+
         doc.setTextColor(80, 80, 80);
         doc.text(userName, 20, 60);
         doc.text("Phone: " + userPhone, 20, 70);
-        
+
         // Add invoice details
         doc.setTextColor(0, 0, 0);
         doc.text("Invoice Details:", 120, 50);
-        
-        let invoiceNum = "INV-" + Math.floor(10000000 + Math.random() * 90000000);
-        let date = new Date().toLocaleDateString('en-GB', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric'
-        });
-        
+
         doc.setTextColor(80, 80, 80);
-        doc.text("Invoice Number: " + invoiceNum, 120, 60);
+        doc.text("Invoice Number: " + number, 120, 60);
         doc.text("Date: " + date, 120, 70);
-        
+
         // Add invoice table header
         doc.setFillColor(240, 240, 240);
         doc.rect(20, 85, 170, 10, 'F');
         doc.setTextColor(0, 0, 0);
         doc.text("Description", 25, 92);
         doc.text("Price", 160, 92);
-        
+
         // Add invoice items
         doc.setTextColor(80, 80, 80);
         doc.text("Mobile Plan (28 days)", 25, 105);
         doc.text("₹500", 160, 105);
-        
+
         doc.setTextColor(80, 80, 80);
         doc.text("Total", 25, 120);
         doc.text("₹500", 160, 120);
-        
+
         // Save the PDF
         doc.save("Invoice.pdf");
     } catch (error) {
@@ -232,14 +196,18 @@ function downloadInvoice() {
     }
 }
 
-function loadContent(section) {
+// Load content based on section
+function loadContent(section, userDetails = null) {
+    console.log("Loading content for section:", section); // Debugging
+    console.log("User details:", userDetails); // Debugging
+
     // Get the content element
     let content = document.getElementById("content");
     if (!content) return;
-    
+
     // Highlight the active link in sidebar
     highlightActiveLink(section);
-    
+
     // Fade out effect
     content.style.opacity = "0";
 
@@ -249,10 +217,12 @@ function loadContent(section) {
                 <div class="profile-card">
                     <h5><i class="fas fa-user-circle"></i> User Profile</h5>
                     <div id="user-profile-info">
-                        <p><strong>Name:</strong> Harshene</p>
-                        <p><strong>Number:</strong> ${localStorage.getItem("phone") || "9876543210"}</p>
+                        <p><strong>Name:</strong> ${userDetails ? userDetails.fullName : 'User'}</p>
+                        <p><strong>Number:</strong> ${userDetails ? userDetails.phoneNumber : (localStorage.getItem("phone") || "9876543210")}</p>
                         <p><strong>Account Type:</strong> Prepaid</p>
                         <p><strong>Status:</strong> <span class="badge bg-success">Active</span></p>
+                        <p><strong>Email:</strong> ${userDetails.email}</p>
+                        <p><strong>Address:</strong> ${userDetails ? `${userDetails.address.street}, ${userDetails.address.city}, ${userDetails.address.state}, ${userDetails.address.country}, ${userDetails.address.pinCode}` : 'N/A'}</p>
                     </div>
                 </div>
 
@@ -274,8 +244,7 @@ function loadContent(section) {
                 </div>
             `;
             // Update user profile after content is loaded
-            const userPhone = localStorage.getItem("phone") || "9876543210";
-            loadUserProfile(userPhone, null);
+            loadUserProfile(userDetails);
         } else if (section === "settings") {
             content.innerHTML = `
                 <div class="profile-card">
@@ -283,15 +252,15 @@ function loadContent(section) {
                     <form id="settings-form">
                         <div class="mb-2">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text" id="name" class="form-control" value="Harshene" disabled>
+                            <input type="text" id="name" class="form-control" value="${userDetails ? userDetails.fullName : 'User'}" disabled>
                         </div>
                         <div class="mb-2">
                             <label for="number" class="form-label">Mobile Number</label>
-                            <input type="text" id="number" class="form-control" value="${localStorage.getItem("phone") || "9876543210"}" disabled>
+                            <input type="text" id="number" class="form-control" value="${userDetails ? userDetails.phoneNumber : (localStorage.getItem("phone") || "9876543210")}" disabled>
                         </div>
                         <div class="mb-2">
                             <label for="address" class="form-label">Address</label>
-                            <textarea id="address" class="form-control" rows="2" disabled>123 Street, City, Country</textarea>
+                            <textarea id="address" class="form-control" rows="2" disabled>${userDetails ? `${userDetails.address.street}, ${userDetails.address.city}, ${userDetails.address.state}, ${userDetails.address.country}, ${userDetails.address.pinCode}` : 'N/A'}</textarea>
                         </div>
                         <div class="mb-2">
                             <label for="email" class="form-label">Email</label>
@@ -314,33 +283,33 @@ function loadContent(section) {
                         <button type="submit" class="btn btn-danger w-100">Save Changes</button>
                     </form>
                 </div>
-        
+
                 <!-- Toast Notification -->
                 <div id="toast" style="position: fixed; bottom: 20px; right: 20px; background-color: #333; color: #fff; padding: 12px 20px; border-radius: 8px; display: none; z-index: 9999;">
                     Changes saved successfully!
                 </div>
             `;
-        
+
             setTimeout(() => {
                 const savedLanguage = sessionStorage.getItem("language");
                 if (savedLanguage) {
                     document.getElementById("language").value = savedLanguage;
                 }
-        
+
                 document.getElementById("settings-form").addEventListener("submit", function (e) {
                     e.preventDefault();
-        
+
                     const email = document.getElementById("email").value;
                     const altNumber = document.getElementById("alt-number").value;
                     const language = document.getElementById("language").value;
-        
+
                     sessionStorage.setItem("email", email);
                     sessionStorage.setItem("altNumber", altNumber);
                     sessionStorage.setItem("language", language);
-        
+
                     showToast();
                 });
-        
+
                 function showToast() {
                     const toast = document.getElementById("toast");
                     toast.style.display = "block";
@@ -355,14 +324,13 @@ function loadContent(section) {
                     }, 3000); // show for 3 seconds
                 }
             }, 100);
-        }
-        else if (section === "transactions") {
+        } else if (section === "transactions") {
             const invoices = [
                 { number: "#INV-" + Math.floor(10000000 + Math.random() * 90000000), date: "18th February 2025", total: "₹500" },
                 { number: "#INV-" + Math.floor(10000000 + Math.random() * 90000000), date: "5th January 2025", total: "₹299" },
                 { number: "#INV-" + Math.floor(10000000 + Math.random() * 90000000), date: "20th December 2024", total: "₹199" }
             ];
-        
+
             let invoiceCards = invoices.map((invoice, index) => `
                 <div class="profile-card">
                     <h5><i class="fas fa-receipt"></i> Invoice ${index + 1}</h5>
@@ -377,7 +345,7 @@ function loadContent(section) {
                     </div>
                 </div>
             `).join('');
-        
+
             content.innerHTML = `
                 <div class="profile-card plan-card">
                     <h5><i class="fas fa-table"></i> Plan</h5>
@@ -391,11 +359,10 @@ function loadContent(section) {
                         <button class="view-plan-btn" onclick="window.location.href='./Prepaid.html'">View plan</button>
                     </div>
                 </div>
-        
+
                 ${invoiceCards}
             `;
-        }
-         else if (section === "recharge") {
+        } else if (section === "recharge") {
             content.innerHTML = `
                 <div class="profile-card">
                     <h5><i class="fas fa-history"></i> Recharge History</h5>
@@ -440,38 +407,38 @@ function loadContent(section) {
                     </div>
                 </div>
             `;
-        }  else if (section === "support") {
-    content.innerHTML = `
-        <div class="faq-container">
-            <h5>Frequently Asked Questions</h5>
-            <div class="faq-box">
-                <div class="faq-question">1. How can I check my balance?</div>
-                <div class="faq-answer">You can check your balance by dialing *123# or using the mobile app.</div>
-            </div>
-            <div class="faq-box">
-                <div class="faq-question">2. How do I recharge my prepaid number?</div>
-                <div class="faq-answer">You can recharge using online banking, UPI apps, retailer shops, or by dialing *123*Recharge Code#.</div>
-            </div>
-            <div class="faq-box">
-                <div class="faq-question">3. How can I check my data usage?</div>
-                <div class="faq-answer">To check data usage, dial *121# or visit the operator's website or mobile app.</div>
-            </div>
+        } else if (section === "support") {
+            content.innerHTML = `
+                <div class="faq-container">
+                    <h5>Frequently Asked Questions</h5>
+                    <div class="faq-box">
+                        <div class="faq-question">1. How can I check my balance?</div>
+                        <div class="faq-answer">You can check your balance by dialing *123# or using the mobile app.</div>
+                    </div>
+                    <div class="faq-box">
+                        <div class="faq-question">2. How do I recharge my prepaid number?</div>
+                        <div class="faq-answer">You can recharge using online banking, UPI apps, retailer shops, or by dialing *123*Recharge Code#.</div>
+                    </div>
+                    <div class="faq-box">
+                        <div class="faq-question">3. How can I check my data usage?</div>
+                        <div class="faq-answer">To check data usage, dial *121# or visit the operator's website or mobile app.</div>
+                    </div>
 
-            <h5>Ask a Question</h5>
-            <form class="ask-form">
-                <input type="text" id="question" placeholder="Enter your question here..." required>
-                <textarea id="questionDetail" rows="3" placeholder="Provide more details..." required></textarea>
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-    `;
-    // Re-initialize FAQ toggle functionality
-    setupFAQToggle();
-}
+                    <h5>Ask a Question</h5>
+                    <form class="ask-form">
+                        <input type="text" id="question" placeholder="Enter your question here..." required>
+                        <textarea id="questionDetail" rows="3" placeholder="Provide more details..." required></textarea>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            `;
+            // Re-initialize FAQ toggle functionality
+            setupFAQToggle();
+        }
 
-content.style.opacity = "1"; // Fade in effect
+        content.style.opacity = "1"; // Fade in effect
 
-// Update active link after content is loaded
-setTimeout(highlightActiveLink, 100);
-}, 300); // Delay to match transition effect
+        // Update active link after content is loaded
+        setTimeout(() => highlightActiveLink(section), 100);
+    }, 300); // Delay to match transition effect
 }

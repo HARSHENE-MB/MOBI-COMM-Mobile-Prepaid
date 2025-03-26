@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel ="stylesheet" href="./css/Profile.css">
+    <link rel="stylesheet" href="./css/Profile.css">
 </head>
 <body>
 
@@ -18,7 +18,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="./asserts/logo-finalz.png" alt="Logo" height="50" width="120"> 
+            <img src="./assets/logo-finalz.png" alt="Logo" height="50" width="120"> 
         </a>
         
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -32,7 +32,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-decoration-none text-reset" href="./index.html#zen">Recharge</a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="#">Help</a></li>
+                <li class="nav-item"><a class="nav-link" href="./Help.html">Help</a></li>
             </ul>
 
             <div class="d-flex align-items-center">
@@ -44,14 +44,13 @@
                         </svg>
                     </a>
                         <div class="dropdown-menu" id="dropdown-menu">
-                            <a class="dropdown-item" href="./Profile.html">My Profile</a>
+                            <a class="dropdown-item" href="./Profile2.html">My Profile</a>
                             <a class="dropdown-item" href="#" id="logout-btn">Logout</a>
                         </div>
                     </div>
                     <button id="login-btn" class="btn btn-danger" style="display: none;">Login</button>
                 </div>
             
-                </div>
             </div>
         </div>
     </div>
@@ -62,7 +61,9 @@
         <!-- Left Sidebar -->
         <div class="col-lg-3 col-md-4">
             <div class="sidebar">
-                <h5><i class="fas fa-bars"></i> Menu</h5>
+                <h5><i class="fas fa-bars"></i> Dashboard</h5>
+                <!-- Example Profile Button -->
+                <!-- <a id="profile-link" onclick="loadContent('profile', userDetails)"><i class="fas fa-user"></i>Profile</a> -->
                 <a id="profile-link" onclick="loadContent('profile')"><i class="fas fa-user"></i> Profile</a>
                 <a id="transactions-link" onclick="loadContent('transactions')"><i class="fas fa-exchange-alt"></i> Transactions</a>
                 <a id="recharge-link" onclick="loadContent('recharge')"><i class="fas fa-sync"></i> Recharge</a>
@@ -78,11 +79,10 @@
                 <div class="profile-card">
                     <h5><i class="fas fa-user-circle"></i> User Profile</h5>
                     <div id="user-profile-info">
-                        <p><strong>Number:</strong> <span id="user-number">9876543210</span></p>
-                        <p><strong>Account Type:</strong> Prepaid</p>
-                        <p><strong>Status:</strong> <span class="badge bg-success">Active</span></p>
+                        <!-- User details will be dynamically inserted here -->
                     </div>
                 </div>
+                
 
                 <div class="profile-card">
                     <h5><i class="fas fa-chart-pie"></i> Data Usage</h5>
@@ -146,7 +146,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./js/Profile.js"></script>
+<script src="./js/Profile2.js"></script>
 
 </body>
 </html>

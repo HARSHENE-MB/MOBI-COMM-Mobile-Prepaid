@@ -261,7 +261,7 @@
                                     <label for="upi-id">UPI ID</label>
                                 </div>
                                 <small id="upi-error" class="text-danger"></small>
-                                <button class="btn btn-primary w-100 mt-3" id="upi-pay-btn" onclick="redirectToSuccess()" disabled>
+                                <button class="btn btn-primary w-100 mt-3" id="upi-pay-btn" onclick="saveRechargeDetails()" disabled>
                                     <i class="fas fa-lock me-2"></i>Pay Securely
                                 </button>
                             </div>
@@ -292,7 +292,7 @@
                                     </div>
                                 </div>
                                 
-                                <button class="btn btn-primary w-100 mt-3" id="card-pay-btn" onclick="redirectToSuccess()" disabled>
+                                <button class="btn btn-primary w-100 mt-3" id="card-pay-btn" onclick="saveRechargeDetails()" disabled>
                                     <i class="fas fa-lock me-2"></i>Pay Securely
                                 </button>
                             </div>
@@ -312,7 +312,7 @@
                                 </div>
                                 <small id="ifsc-error" class="text-danger"></small>
                                 
-                                <button class="btn btn-primary w-100 mt-3" id="bank-pay-btn" onclick="redirectToSuccess()" disabled>
+                                <button class="btn btn-primary w-100 mt-3" id="bank-pay-btn" onclick="saveRechargeDetails()" disabled>
                                     <i class="fas fa-lock me-2"></i>Pay Securely
                                 </button>
                             </div>
@@ -337,10 +337,7 @@
                                 <span>Base Amount:</span>
                                 <span id="bill-base-amount">₹239.00</span>
                             </div>
-                            <div class="bill-item">
-                                <span>GST (18%):</span>
-                                <span id="bill-gst">₹43.02</span>
-                            </div>
+                            
                             <div class="bill-total">
                                 <span>Total Amount:</span>
                                 <span id="bill-total" class="text-primary">₹282.02</span>
@@ -390,256 +387,401 @@
     </div>
 
     <script>
-        // Load recharge plans data
-        const rechargePlans = {
-            "recharge_plans": [
-                {
-                    "category": "Popular Plans",
-                    "plans": [
-                        { "id": 501, "name": "Super Value Pack", "price": 239, "data": "1.5GB/day", "validity": "28 days", "benefits": "Unlimited Calls, 100 SMS/day", "bestseller": true, "description": "Perfect for daily users with moderate data needs." },
-                        { "id": 502, "name": "Power Pack Premium", "price": 349, "data": "2GB/day", "validity": "28 days", "benefits": "Unlimited Calls, Amazon Prime", "bestseller": true, "description": "Our most popular plan for digital enthusiasts." },
-                        { "id": 503, "name": "Ultra Data Pack", "price": 399, "data": "3GB/day", "validity": "28 days", "benefits": "Unlimited Calls, 100 SMS/day, Prime Video", "bestseller": false, "description": "High-speed data allocation with unlimited calling benefits." }
-                    ]
-                }
-                // More categories would be here...
-            ]
+// Function to get URL parameters
+function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        categoryName: params.get('categoryName'),
+        planId: params.get('planId'),
+        price: params.get('price'),
+        data: params.get('data'),
+        validity: params.get('validity'),
+        benefits: params.get('benefits')
+    };
+}
+
+
+// Fetch all plans data from API
+async function fetchPlansData() {
+    try {
+        const [categoriesResponse, plansResponse] = await Promise.all([
+            fetch('http://localhost:8083/api/categories'),
+            fetch('http://localhost:8083/api/plans')
+        ]);
+        
+        if (!categoriesResponse.ok || !plansResponse.ok) {
+            throw new Error('Failed to fetch data');
+        }
+        
+        const categories = await categoriesResponse.json();
+        const plans = await plansResponse.json();
+        
+        // Organize plans by category
+        const organizedPlans = {
+            recharge_plans: []
         };
-
-        // Function to get URL parameters
-        function getQueryParams() {
-            const params = new URLSearchParams(window.location.search);
-            return {
-                planId: params.get('planId'),
-                plan: params.get('plan'),
-                price: params.get('price'),
-                data: params.get('data'),
-                validity: params.get('validity'),
-                benefits: params.get('benefits')
-            };
-        }
-
-        // Find plan by ID
-        function findPlanById(planId) {
-            if (!planId) return null;
+        
+        categories.forEach(category => {
+            const categoryPlans = plans.filter(plan => 
+                plan.category && plan.category.categoryId === category.categoryId
+            );
             
-            for (let category of rechargePlans.recharge_plans) {
-                for (let plan of category.plans) {
-                    if (plan.id == planId) {
-                        return plan;
-                    }
+            if (categoryPlans.length > 0) {
+                organizedPlans.recharge_plans.push({
+                    categoryName: category.categoryName,
+                    categoryId: category.categoryId,
+                    plans: categoryPlans
+                });
+            }
+        });
+        
+        return organizedPlans;
+    } catch (error) {
+        console.error('Error fetching plans data:', error);
+        // Fallback to basic structure if API fails
+        return {
+            recharge_plans: []
+        };
+    }
+}
+
+// Find plan by category name and plan ID
+async function findPlanByCategoryAndPlanId(categoryName, planId) {
+    if (!categoryName || !planId) return null;
+    
+    const plansData = await fetchPlansData();
+    
+    for (let category of plansData.recharge_plans) {
+        if (category.categoryName === categoryName) {
+            for (let plan of category.plans) {
+                if (plan.planId === parseInt(planId)) {
+                    return plan;
                 }
             }
-            return null;
         }
+    }
+    return null;
+}
 
-        // Display plan details on the payment page
-        function displayPlanDetails() {
-            const params = getQueryParams();
-            let planDetails;
-            
-            // Check if we have planId or plan name
-            if (params.planId) {
-                planDetails = findPlanById(params.planId);
-            } 
-            
-            // If no planId or plan not found, use direct parameters
-            if (!planDetails && params.plan && params.price) {
-                planDetails = {
-                    name: params.plan,
-                    price: params.price,
-                    data: params.data || "1.5GB/day",
-                    validity: params.validity || "28 days",
-                    benefits: params.benefits || "Unlimited Calls, 100 SMS/day"
-                };
-            }
-            
-            // Use default plan if no parameters provided
-            if (!planDetails) {
-                planDetails = {
-                    name: "Super Value Pack",
-                    price: 239,
-                    data: "1.5GB/day",
-                    validity: "28 days",
-                    benefits: "Unlimited Calls, 100 SMS/day"
-                };
-            }
-
-            // Update plan details section
-            document.getElementById('plan-name').textContent = planDetails.name;
-            document.getElementById('plan-price').textContent = `₹${planDetails.price}`;
-            document.getElementById('plan-data').textContent = planDetails.data;
-            document.getElementById('plan-validity').textContent = planDetails.validity;
-            
-            // Update bill section
-            document.getElementById('bill-plan-name').textContent = planDetails.name;
-            document.getElementById('bill-data').textContent = planDetails.data;
-            document.getElementById('bill-validity').textContent = planDetails.validity;
-            document.getElementById('bill-benefits').textContent = planDetails.benefits;
-            
-            // Calculate bill amounts
-            const baseAmount = parseFloat(planDetails.price);
-            const gst = baseAmount * 0.18;
-            const total = baseAmount + gst;
-            
-            document.getElementById('bill-base-amount').textContent = `₹${baseAmount.toFixed(2)}`;
-            document.getElementById('bill-gst').textContent = `₹${gst.toFixed(2)}`;
-            document.getElementById('bill-total').textContent = `₹${total.toFixed(2)}`;
-            
-            // Set current date
-            const today = new Date();
-            const formattedDate = today.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            document.getElementById('bill-date').textContent = formattedDate;
-        }
-
-        // Activate payment option and show relevant form
-        function activatePaymentOption(element, method) {
-            // Remove active class from all options
-            document.querySelectorAll('.payment-option').forEach(option => {
-                option.classList.remove('active');
-            });
-            
-            // Add active class to selected option
-            element.classList.add('active');
-            
-            // Hide all forms
-            document.querySelectorAll('.payment-form').forEach(form => {
-                form.classList.add('hidden');
-            });
-            
-            // Show selected form
-            const selectedForm = document.getElementById(method + '-form');
-            selectedForm.classList.remove('hidden');
-        }
-
-        // UPI Validation
-        function validateUPI() {
-            let upiID = document.getElementById("upi-id").value;
-            let error = document.getElementById("upi-error");
-            let payBtn = document.getElementById("upi-pay-btn");
-            let regex = /^[a-zA-Z0-9.-]+@[a-zA-Z]+$/;
-
-            if (!regex.test(upiID)) {
-                error.innerHTML = "Invalid UPI ID! Example: yourname@upi";
-                payBtn.disabled = true;
-            } else {
-                error.innerHTML = "";
-                payBtn.disabled = false;
+// Find plan by just planId
+async function findPlanById(planId) {
+    if (!planId) return null;
+    
+    const plansData = await fetchPlansData();
+    
+    for (let category of plansData.recharge_plans) {
+        for (let plan of category.plans) {
+            if (plan.planId === parseInt(planId)) {
+                // Add categoryName to the plan object
+                plan.categoryName = category.categoryName;
+                return plan;
             }
         }
+    }
+    return null;
+}
 
-        // Card Validation (Auto-formatting card number)
-        document.getElementById('cardNumber').addEventListener('input', function (e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 16) value = value.slice(0, 16);
-            e.target.value = value.replace(/(\d{4})/g, '$1 ').trim();
-            validateCard();
+// Display plan details on the payment page
+async function displayPlanDetails() {
+    const params = getQueryParams();
+    let planDetails;
+    
+    // Try to get the plan by planId
+    if (params.planId) {
+        planDetails = await findPlanById(params.planId);
+    }
+    
+    // Try to get the plan by category and plan ID if available
+    if (!planDetails && params.categoryName && params.planId) {
+        planDetails = await findPlanByCategoryAndPlanId(params.categoryName, params.planId);
+    }
+    
+    // If plan not found, use direct parameters
+    if (!planDetails && params.price) {
+        planDetails = {
+            planId: params.planId || "1",
+            price: params.price,
+            data: params.data || "1.5GB/day",
+            validity: params.validity || "28 days",
+            benefits: params.benefits || "Unlimited Calls, 100 SMS/day",
+            categoryName: params.categoryName || "Popular Plans"
+        };
+    }
+    
+    // Check localStorage as fallback
+    if (!planDetails) {
+        planDetails = {
+            planId: localStorage.getItem("selectedPlanId") || "1",
+            price: localStorage.getItem("selectedPlanPrice") || "239",
+            data: localStorage.getItem("selectedPlanData") || "1.5GB/day",
+            validity: localStorage.getItem("selectedPlanValidity") || "28 days",
+            benefits: localStorage.getItem("selectedPlanBenefits") || "Unlimited Calls, 100 SMS/day",
+            categoryName: localStorage.getItem("selectedCategoryName") || "Popular Plans"
+        };
+    }
+    
+    // Final fallback to default plan if no parameters provided
+    if (!planDetails || !planDetails.price) {
+        planDetails = {
+            planId: "1",
+            price: 239,
+            data: "1.5GB/day",
+            validity: "28 days",
+            benefits: "Unlimited Calls, 100 SMS/day",
+            categoryName: "Popular Plans"
+        };
+    }
+
+    // Update plan details section
+    document.getElementById('plan-name').textContent = planDetails.categoryName;
+    document.getElementById('plan-price').textContent = `₹${planDetails.price}`;
+    document.getElementById('plan-data').textContent = planDetails.data;
+    document.getElementById('plan-validity').textContent = planDetails.validity;
+    
+    // Update bill section
+    document.getElementById('bill-plan-name').textContent = planDetails.categoryName;
+    document.getElementById('bill-data').textContent = planDetails.data;
+    document.getElementById('bill-validity').textContent = planDetails.validity;
+    document.getElementById('bill-benefits').textContent = planDetails.benefits;
+    
+   // Calculate bill amounts
+const baseAmount = parseFloat(planDetails.price);
+document.getElementById('bill-base-amount').textContent = `₹${baseAmount.toFixed(2)}`;
+document.getElementById('bill-total').textContent = `₹${baseAmount.toFixed(2)}`;
+
+    // Set current date
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    document.getElementById('bill-date').textContent = formattedDate;
+}
+
+// Activate payment option and show relevant form
+function activatePaymentOption(element, method) {
+    // Remove active class from all options
+    document.querySelectorAll('.payment-option').forEach(option => {
+        option.classList.remove('active');
+    });
+    
+    // Add active class to selected option
+    element.classList.add('active');
+    
+    // Hide all forms
+    document.querySelectorAll('.payment-form').forEach(form => {
+        form.classList.add('hidden');
+    });
+    
+    // Show selected form
+    const selectedForm = document.getElementById(method + '-form');
+    selectedForm.classList.remove('hidden');
+}
+
+// UPI Validation
+function validateUPI() {
+    let upiID = document.getElementById("upi-id").value;
+    let error = document.getElementById("upi-error");
+    let payBtn = document.getElementById("upi-pay-btn");
+    let regex = /^[a-zA-Z0-9.-]+@[a-zA-Z]+$/;
+
+    if (!regex.test(upiID)) {
+        error.innerHTML = "Invalid UPI ID! Example: yourname@upi";
+        payBtn.disabled = true;
+    } else {
+        error.innerHTML = "";
+        payBtn.disabled = false;
+    }
+}
+
+// Card Validation (Auto-formatting card number)
+document.getElementById('cardNumber').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 16) value = value.slice(0, 16);
+    e.target.value = value.replace(/(\d{4})/g, '$1 ').trim();
+    validateCard();
+});
+
+// Format expiry date as MM/YY
+document.getElementById('expiryDate').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 4) value = value.slice(0, 4);
+    if (value.length > 2) {
+        e.target.value = value.slice(0, 2) + '/' + value.slice(2);
+    } else {
+        e.target.value = value;
+    }
+    validateCard();
+});
+
+function validateCard() {
+    let cardNumber = document.getElementById("cardNumber").value.replace(/\s/g, '');
+    let expiry = document.getElementById("expiryDate").value;
+    let cvv = document.getElementById("cvv").value;
+    let payBtn = document.getElementById("card-pay-btn");
+
+    let cardError = document.getElementById("card-error");
+    let expiryError = document.getElementById("expiry-error");
+    let cvvError = document.getElementById("cvv-error");
+
+    let cardRegex = /^\d{16}$/;
+    let expiryRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+    let cvvRegex = /^\d{3,4}$/;
+
+    let isValid = true;
+
+    if (!cardRegex.test(cardNumber)) {
+        cardError.innerHTML = "Invalid Card Number! Must be 16 digits.";
+        isValid = false;
+    } else {
+        cardError.innerHTML = "";
+    }
+
+    if (!expiryRegex.test(expiry)) {
+        expiryError.innerHTML = "Invalid Expiry Date! Use MM/YY format.";
+        isValid = false;
+    } else {
+        expiryError.innerHTML = "";
+    }
+
+    if (!cvvRegex.test(cvv)) {
+        cvvError.innerHTML = "Invalid CVV! Must be 3 or 4 digits.";
+        isValid = false;
+    } else {
+        cvvError.innerHTML = "";
+    }
+
+    payBtn.disabled = !isValid;
+}
+
+// Bank Validation
+function validateBank() {
+    let bankAcc = document.getElementById("bankAccount").value;
+    let ifsc = document.getElementById("ifscCode").value;
+    let payBtn = document.getElementById("bank-pay-btn");
+
+    let bankError = document.getElementById("bank-error");
+    let ifscError = document.getElementById("ifsc-error");
+
+    let bankRegex = /^\d{9,18}$/;
+    let ifscRegex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+
+    let isValid = true;
+
+    if (!bankRegex.test(bankAcc)) {
+        bankError.innerHTML = "Invalid Bank Account Number! Must be 9-18 digits.";
+        isValid = false;
+    } else {
+        bankError.innerHTML = "";
+    }
+
+    if (!ifscRegex.test(ifsc)) {
+        ifscError.innerHTML = "Invalid IFSC Code! Example: HDFC0001234";
+        isValid = false;
+    } else {
+        ifscError.innerHTML = "";
+    }
+
+    payBtn.disabled = !isValid;
+}
+
+
+async function saveRechargeDetails() {
+    console.log("meow");
+
+
+    const userId = JSON.parse(localStorage.getItem("loggedInUser")).userId;
+    const planId = localStorage.getItem("selectedPlanId");
+
+    console.log(userId + planId);
+
+    let paymentMethod = "UPI"; // Default
+    const activeOption = document.querySelector('.payment-option.active');
+    if (activeOption) {
+        if (activeOption.id === "card-option") paymentMethod = "CARD";
+        else if (activeOption.id === "netbanking-option") paymentMethod = "NET_BANKING";
+        else if (activeOption.id === "upi-option") paymentMethod = "UPI";
+    }
+
+    const rechargeRequest = {
+        userId: userId,
+        planId: planId,
+        paymentMethod: paymentMethod,
+    };
+
+    try {
+        const response = await fetch("http://localhost:8083/api/recharges/process", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(rechargeRequest)
         });
 
-        // Format expiry date as MM/YY
-        document.getElementById('expiryDate').addEventListener('input', function (e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 4) value = value.slice(0, 4);
-            if (value.length > 2) {
-                e.target.value = value.slice(0, 2) + '/' + value.slice(2);
-            } else {
-                e.target.value = value;
-            }
-            validateCard();
-        });
-
-        function validateCard() {
-            let cardNumber = document.getElementById("cardNumber").value.replace(/\s/g, '');
-            let expiry = document.getElementById("expiryDate").value;
-            let cvv = document.getElementById("cvv").value;
-            let payBtn = document.getElementById("card-pay-btn");
-
-            let cardError = document.getElementById("card-error");
-            let expiryError = document.getElementById("expiry-error");
-            let cvvError = document.getElementById("cvv-error");
-
-            let cardRegex = /^\d{16}$/;
-            let expiryRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
-            let cvvRegex = /^\d{3,4}$/;
-
-            let isValid = true;
-
-            if (!cardRegex.test(cardNumber)) {
-                cardError.innerHTML = "Invalid Card Number! Must be 16 digits.";
-                isValid = false;
-            } else {
-                cardError.innerHTML = "";
-            }
-
-            if (!expiryRegex.test(expiry)) {
-                expiryError.innerHTML = "Invalid Expiry Date! Use MM/YY format.";
-                isValid = false;
-            } else {
-                expiryError.innerHTML = "";
-            }
-
-            if (!cvvRegex.test(cvv)) {
-                cvvError.innerHTML = "Invalid CVV! Must be 3 or 4 digits.";
-                isValid = false;
-            } else {
-                cvvError.innerHTML = "";
-            }
-
-            payBtn.disabled = !isValid;
+        if (!response.ok) {
+            throw new Error("Failed to save recharge details");
         }
 
-        // Bank Validation
-        function validateBank() {
-            let bankAcc = document.getElementById("bankAccount").value;
-            let ifsc = document.getElementById("ifscCode").value;
-            let payBtn = document.getElementById("bank-pay-btn");
+        const data = await response.json();
+        console.log("Recharge successful:", data);
+        redirectToSuccess();
+        return data;
+    } catch (error) {
+        console.error("Error saving recharge details:", error);
+        throw error;
+    }
+}
 
-            let bankError = document.getElementById("bank-error");
-            let ifscError = document.getElementById("ifsc-error");
 
-            let bankRegex = /^\d{9,18}$/;
-            let ifscRegex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+// Redirect function
+function redirectToSuccess() {
+    // Find the active payment button
+    const activePayBtn = document.querySelector('.btn-primary:not([disabled])');
+    
+    if (activePayBtn) {
+        // Show loading state
+        activePayBtn.innerHTML = 
+            '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
+        activePayBtn.disabled = true;
+    }
 
-            let isValid = true;
+    // Redirect after delay
+    setTimeout(() => {
+        window.location.href = "./Payment-successful.html";
+    }, 1500);
+}
 
-            if (!bankRegex.test(bankAcc)) {
-                bankError.innerHTML = "Invalid Bank Account Number! Must be 9-18 digits.";
-                isValid = false;
-            } else {
-                bankError.innerHTML = "";
-            }
+// Initialize page
+window.onload = function() {
+    if (typeof displayPlanDetails === "function") {
+        displayPlanDetails();
+    } else {
+        console.error("displayPlanDetails function is not defined.");
+    }
+};
 
-            if (!ifscRegex.test(ifsc)) {
-                ifscError.innerHTML = "Invalid IFSC Code! Example: HDFC0001234";
-                isValid = false;
-            } else {
-                ifscError.innerHTML = "";
-            }
-
-            payBtn.disabled = !isValid;
+        
+// Initialize page
+window.addEventListener('DOMContentLoaded', async function() {
+    try {
+        await displayPlanDetails();
+        
+        // Add event listeners for validation only after the page is loaded
+        if (document.getElementById("upi-id")) {
+            document.getElementById("upi-id").addEventListener('input', validateUPI);
         }
-
-        // Redirect function
-        function redirectToSuccess() {
-            // Show loading state
-            const activePayBtn = document.querySelector('.btn-primary:not([disabled])');
-            if (activePayBtn) {
-                activePayBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
-                activePayBtn.disabled = true;
-            }
-            
-            setTimeout(() => {
-                window.location.href = "./Payment-successful.html";
-            }, 1500);
+        
+        if (document.getElementById("bankAccount") && document.getElementById("ifscCode")) {
+            document.getElementById("bankAccount").addEventListener('input', validateBank);
+            document.getElementById("ifscCode").addEventListener('input', validateBank);
         }
-
-        // Initialize page
-        window.onload = function() {
-            displayPlanDetails();
-        };
+        
+        if (document.getElementById("cvv")) {
+            document.getElementById("cvv").addEventListener('input', validateCard);
+        }
+    } catch (error) {
+        console.error('Error initializing page:', error);
+    }
+});
     </script>
 </body>
 </html>

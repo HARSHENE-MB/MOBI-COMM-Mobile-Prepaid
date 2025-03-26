@@ -167,6 +167,8 @@ body {
     padding: 15px;
 }
 
+
+
 /* Welcome Section */
 .welcome-section {
     background: white;
@@ -186,7 +188,6 @@ body {
     color: #7f8c8d;
     margin-bottom: 0;
 }
-
 /* Dashboard Cards */
 .stats-card {
     border-radius: 15px;

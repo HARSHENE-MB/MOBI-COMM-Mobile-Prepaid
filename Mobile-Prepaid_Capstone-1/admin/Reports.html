@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - User Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/Reports.css">
+</head>
+
+<body>
+    <!-- <div class="dashboard-container"> -->
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <img src="./assets/logo-finalz.png" height="40" width="100" alt="Company Logo" class="company-logo">
+                </div>
+                <button class="btn toggle-sidebar-btn d-md-none" id="sidebarCollapseBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-header">Overview</div>
+                    <ul class="nav-links">
+                        <li><a href="admin-dashboard.html"><i class="fas fa-chart-pie"></i> <span>Dashboard</span></a></li>
+                        <li class="active"><a href="./Reports.html"><i class="fas fa-file-alt"></i> Reports</a></li>
+
+                    </ul>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-header">Manage</div>
+                    <ul class="nav-links">
+                        <li><a href="Users.html"><i class="fas fa-users"></i> <span>Users</span></a></li>
+                        <li><a href="Plans.html"><i class="fas fa-list-alt"></i> <span>Plans</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-header">Settings</div>
+                    <ul class="nav-links">
+                        <li><a href="Settings.html"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <!-- </div> -->
+          <!-- Main Content -->
+            <div class="main-content">
+             <!-- Top navbar -->
+             <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm rounded">
+                <div class="container-fluid">
+                    <button class="btn sidebar-toggle d-lg-none" id="mobileSidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h3 class="navbar-brand mb-0">Reports</h3>
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge d-none">
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationsDropdown">
+                                <li class="dropdown-header">Notifications</li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="notification-item empty-notification">No new notifications</li>
+                            </ul>
+                        </div>
+                        <div class="dropdown ms-3">
+                            <button class="btn dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                                <!-- <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li> -->
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="./admin-login.html" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            
+            <!-- Content Wrapper -->
+            <div class="content-wrapper">
+                <!-- Report Controls -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="report-filters">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Report Filters</h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="dateRange" class="form-label">Date Range</label>
+                                            <select class="form-select" id="dateRange">
+                                                <option value="today">Today</option>
+                                                <option value="yesterday">Yesterday</option>
+                                                <option value="last7" selected>Last 7 Days</option>
+                                                <option value="last30">Last 30 Days</option>
+                                                <option value="thisMonth">This Month</option>
+                                                <option value="lastMonth">Last Month</option>
+                                                <option value="custom">Custom Range</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="planType" class="form-label">Plan Type</label>
+                                            <select class="form-select" id="planType">
+                                                <option value="all" selected>All Plans</option>
+                                                <option value="data">Family Plan</option>
+                                                <option value="voice">Data Plans</option>
+                                                <option value="combo">Budget Plans</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="report-actions">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Report Actions</h5>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-primary" id="generateReport">
+                                            <i class="fas fa-sync-alt me-2"></i>Generate Report
+                                        </button>
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-download me-2"></i>Export
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                                <li><a class="dropdown-item" href="#"><i class="far fa-file-pdf me-2"></i>PDF</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="far fa-file-excel me-2"></i>Excel</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="far fa-file-csv me-2"></i>CSV</a></li>
+                                            </ul>
+                                        </div>
+                                        <button class="btn btn-outline-secondary">
+                                            <i class="fas fa-print me-2"></i>Print
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card summary-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted">Total Recharges</h6>
+                                        <h3 class="mt-2 mb-0">Rs.4,256</h3>
+                                        <p class="text-success mb-0"><i class="fas fa-arrow-up me-1"></i>12.5% vs last period</p>
+                                    </div>
+                                    <div class="summary-icon bg-primary-light">
+                                        <i class="fas fa-wallet text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card summary-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted">Revenue</h6>
+                                        <h3 class="mt-2 mb-0">Rs.24,850</h3>
+                                        <p class="text-success mb-0"><i class="fas fa-arrow-up me-1"></i>8.3% vs last period</p>
+                                    </div>
+                                    <div class="summary-icon bg-success-light">
+                                        <i class="fas fa-dollar-sign text-success"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card summary-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted">Active Users</h6>
+                                        <h3 class="mt-2 mb-0">3,842</h3>
+                                        <p class="text-success mb-0"><i class="fas fa-arrow-up me-1"></i>5.1% vs last period</p>
+                                    </div>
+                                    <div class="summary-icon bg-info-light">
+                                        <i class="fas fa-users text-info"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card summary-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-subtitle text-muted">Avg. Transaction</h6>
+                                        <h3 class="mt-2 mb-0">Rs.500.84</h3>
+                                        <p class="text-danger mb-0"><i class="fas fa-arrow-down me-1"></i>2.3% vs last period</p>
+                                    </div>
+                                    <div class="summary-icon bg-warning-light">
+                                        <i class="fas fa-exchange-alt text-warning"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Additional Reports -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Usage Analysis</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Plan Category</th>
+                                                <th>Avg. Usage (%)</th>
+                                                <th>Trend</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Family Plan</td>
+                                                <td>78.5%</td>
+                                                <td><span class="badge bg-success">+12.4%</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Data Plans</td>
+                                                <td>64.3%</td>
+                                                <td><span class="badge bg-danger">-3.8%</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Study Plans</td>
+                                                <td>82.1%</td>
+                                                <td><span class="badge bg-success">+5.2%</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Budget Plans</td>
+                                                <td>91.7%</td>
+                                                <td><span class="badge bg-success">+8.7%</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Entertainment</td>
+                                                <td>45.2%</td>
+                                                <td><span class="badge bg-danger">-1.9%</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</body>
+<script src="/Mobile-Prepaid_Capstone-1//admin/js/Reports.js"></script>
+</html>

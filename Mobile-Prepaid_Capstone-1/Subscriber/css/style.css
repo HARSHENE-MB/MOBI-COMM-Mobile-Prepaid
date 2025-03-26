@@ -17,13 +17,12 @@
 }
 
 body {
-  padding-top: 80px; /* Adjust based on navbar height */
+  padding-top: 80px; 
 }
 
 .carousel {
-  margin-top: 10px; /* Optional: Extra spacing */
+  margin-top: 10px; 
 }
-
   
 .navbar-nav .nav-link {
     font-size: 16px;
@@ -41,23 +40,28 @@ body {
     
 }
 
+/*direct underline for active nav links */
+.nav-link.active {
+    border-bottom: 3px solid red;
+}
+
 /* Style for the carousel container */
 #carouselExample {
     max-width: 100%;
-    margin: 20px auto; /* Centering the carousel */
+    margin: 20px auto; 
 }
 
 /* Ensure images fit properly */
 .carousel-item img {
-    height: 400px;  /* Adjust height as needed */
+    height: 400px;  
     object-fit: cover;
-    border-radius: 8px; /* Optional: rounded corners */
+    border-radius: 8px; 
 }
 
 /* Customize carousel controls */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    background-color: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5); 
     border-radius: 50%;
     padding: 15px;
 }
@@ -75,24 +79,24 @@ body {
 
 /* Light Background Color */
 body {
-  background: linear-gradient(to right, #ffffff, rgb(230, 229, 229)); /* Light gray gradient */
+  background: linear-gradient(to right, #ffffff, rgb(230, 229, 229)); 
 }
 
 /* Navbar Styling */
 .navbar {
     padding: 10px;
-    background-color: #ffffff; /* White navbar */
+    background-color: #ffffff; 
 }
 
 /* Carousel Spacing */
 .carousel {
-    margin-top: 80px; /* Prevents overlap with fixed navbar */
+    margin-top: 80px; 
 }
 
 /* Restrict carousel width and center it */
 #carouselExample {
     max-width: 90%; 
-    margin: 20px auto; /* Center the carousel */
+    margin: 20px auto; 
 }
 
 /* Ensure images fit properly */
@@ -126,24 +130,24 @@ section {
 
 /* Background Colors for Each Section */
 .zen-section {
-    background-color: #f8f8f8; /* Light Gray */
+    background-color: #f8f8f8; 
 }
 
 .packs-section {
-  background-color: #ffffff; /* White */
+  background-color: #ffffff; 
   width: 90%;
-  margin: auto; /* Centers the section */
+  margin: auto; 
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centers content horizontally */
-  text-align: center; /* Ensures text inside is centered */
+  align-items: center; 
+  text-align: center; 
 }
 
 .packs-container {
     display: flex;
-    justify-content: center; /* Centers child elements horizontally */
-    gap: 20px; /* Adds spacing between cards */
-    flex-wrap: wrap; /* Ensures responsiveness */
+    justify-content: center; 
+    gap: 20px; 
+    flex-wrap: wrap; 
 }
 
 
@@ -159,9 +163,9 @@ section {
 
 /* Full-Width Box Styling */
 .wide-box {
-    width: 30%; /* Boxes take up 30% of the width */
-    height: 150px; /* Adjust height */
-    background: #d0d0d0; /* Light gray placeholder */
+    width: 30%; 
+    height: 150px; 
+    background: #d0d0d0; 
     border-radius: 10px;
     margin: 10px;
 }
@@ -176,8 +180,8 @@ section {
 
 /* Full-Width Image Styling */
 .full-width-image {
-    width: 80%; /* Image takes up 80% of screen */
-    max-width: 900px; /* Prevents stretching */
+    width: 80%; 
+    max-width: 900px; 
     height: auto;
     border-radius: 10px;
 }
@@ -185,33 +189,34 @@ section {
 /* Responsive Design */
 @media (max-width: 768px) {
     .wide-box {
-        width: 80%; /* Boxes take full width on small screens */
+        width: 80%; 
         height: 100px;
     }
 
     .full-width-image {
-        width: 100%; /* Image takes full width on small screens */
+        width: 100%; 
     }
 }
 /* Remove rounded corners from all sections */
 .section-container {
-    border-radius: 0 !important; /* Ensure no rounded edges */
-    width: 100%; /* Make sure it spans the full width */
-    padding: 20px; /* Add spacing inside */
-    background-color: #f8f9fa; /* Optional: Light gray background */
-    border: none; /* Remove unnecessary borders */
+    border-radius: 0 !important; 
+    width: 100%; 
+    padding: 20px; 
+    background-color: #f8f9fa; 
+    border: none; 
 }
 
 .full{
     max-width: 100%;
-    margin: 20px auto; /* Centering the carousel */
+    margin: 20px auto; 
 }
 
 /* Styling for Plan Cards */
 .plan-card {
-    background-color: #f9f9f9;
+    background-color: #fffefe;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin:10px;
 }
 
 .plan-card .card-title {
@@ -244,63 +249,65 @@ section {
     border: 2px solid #ff6f61;
 }
 
-/*for logout,profile*/
+/* Dropdown Menu */
 .dropdown-menu {
-    min-width: 110px; /* Reduce width slightly */
-    padding: 4px 0; /* Adjust padding */
-    font-size: 0.8rem; /* Reduce font size */
+    min-width: 100px;
+    padding: 3px 0; 
+    font-size: 0.78rem; 
+    margin-top: 0;
+    border-radius: 6px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: none;
 }
 
+/* Dropdown Items */
 .dropdown-item {
-    padding: 6px 10px; /* Reduce padding */
-    font-size: 0.8rem; /* Make text smaller */
-    white-space: nowrap; /* Prevent text from wrapping */
+    padding: 5px 8px; 
+    font-size: 0.78rem; 
+    white-space: nowrap; 
+    transition: background 0.3s ease, color 0.2s ease;
 }
 
+/* Hover Effect */
+.dropdown-item:hover {
+    background: linear-gradient(to right, #f32929, #f06b6b);
+    color: white;
+    border-radius: 4px; 
+}
+
+/* Dropdown Visibility */
 .dropdown-menu.show {
     display: block;
     position: absolute;
     right: 0;
     background-color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    border-radius: 4px; /* Optional: Round corners */
+    border-radius: 4px;
 }
 
-.dropdown-item:hover {
-    background: linear-gradient(to right, #f32929, #f06b6b);
-    color: #ffffff;
+/* Dropdown Hover Behavior */
+.dropdown:hover .dropdown-menu {
+    display: block;
 }
 
-
-    /* Hover dropdown */
-    .dropdown:hover .dropdown-menu {
-        display: block;
-    }
-    
-    /* Style the dropdown menu */
+/* Mobile Responsive Tweaks */
+@media (max-width: 768px) {
     .dropdown-menu {
-        margin-top: 0;
-        border-radius: 8px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        min-width: 120px; 
+        font-size: 0.85rem; 
     }
-    
-    /* Style the dropdown items */
+
     .dropdown-item {
-        padding: 6px 10px;
+        padding: 8px 10px; 
     }
-    
-    .dropdown-item:hover {
-        background-color: #f8f9fa;
-    }
+}
 
-
-    
 
     /* for quick recharge */
     .error-container {
         margin-top: 5px;
-        min-height: 20px; /* Reserve space even when empty */
+        min-height: 20px; 
         position: relative;
     }
     

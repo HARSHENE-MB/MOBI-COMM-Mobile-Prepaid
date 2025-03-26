@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MobilePrepaid</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/Help.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="./assets/logo-finalz.png" alt="Logo" height="50" width="100"> <!-- Replace with your logo -->
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./Prepaid.html">Prepaid</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./index.html#zen">Recharge</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./Help.html">Help</a></li>
+                </ul>
+
+                <div class="d-flex align-items-center">
+                    <div class="dropdown" id="profile-dropdown">
+                        <!-- Profile icon or username will be updated dynamically -->
+                        <a href="#" class="nav-link" id="profile-toggle">
+                            <span id="profile-content">
+                                <i class="bi bi-person fs-4"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="black" class="bi bi-person" viewBox="0 0 16 16">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                                </svg>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu" id="dropdown-menu">
+                            <a class="dropdown-item" href="./Profile2.html">My Profile</a>
+                            <a class="dropdown-item" href="#" id="logout-btn">Logout</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </nav>
+<!-- Help Header -->
+<header class="help-header">
+    <div class="container text-center">
+        <h1>Help Center</h1>
+        <p>Got a question about using MobilePrepaid? We're here to help.</p>
+        
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" class="form-control" placeholder="Search for help articles">
+            <button class="search-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Help Categories -->
+<section class="help-categories py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Explore all topics</h2>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="category-card">
+                    <div class="icon-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-credit-card" viewBox="0 0 16 16">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/>
+                            <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1z"/>
+                        </svg>
+                    </div>
+                    <h3>Recharge & Payments</h3>
+                    <p>Setting up payment methods and recharging balance.</p>
+                    <a href="#" class="btn-link">See all</a>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="category-card">
+                    <div class="icon-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-gear" viewBox="0 0 16 16">
+                            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1zM11.5 8a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H11V8.5a.5.5 0 0 1 .5-.5"/>
+                            <path d="M13.405 13.578c-.684-1.782-2.621-2.357-3.043-2.428l-.014-.003c-.294-.055-.585-.11-.872-.154a.5.5 0 1 1 .146-.989c.306.046.615.105.926.163.302.056.611.113.905.233.644.266 1.392.82 1.82 1.748.143.35.354.78.52 1.155l.204.462c.11.276.217.551.315.855a.5.5 0 1 1-.936.351c-.094-.282-.192-.536-.295-.792l-.193-.44c-.16-.36-.355-.754-.493-1.095l-.007-.016zM16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5"/>
+                        </svg>
+                    </div>
+                    <h3>Managing your account</h3>
+                    <p>Setting up your account and getting started.</p>
+                    <a href="#" class="btn-link">See all</a>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="category-card">
+                    <div class="icon-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
+                            <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                            <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                        </svg>
+                    </div>
+                    <h3>Data & Plans</h3>
+                    <p>Managing your data plans and mobile usage.</p>
+                    <a href="#" class="btn-link">See all</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Articles -->
+<section class="featured-articles py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Featured Help Articles</h2>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="article-card">
+                    <h4>How to activate your SIM card</h4>
+                    <p>Learn the simple steps to activate your new SIM card and get started with MobilePrepaid.</p>
+                    <a href="#" class="btn-link">Read more</a>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="article-card">
+                    <h4>Understanding data plans</h4>
+                    <p>Get to know our different data plans and find the one that suits your needs.</p>
+                    <a href="#" class="btn-link">Read more</a>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="article-card">
+                    <h4>International roaming guide</h4>
+                    <p>Everything you need to know about using your phone while traveling abroad.</p>
+                    <a href="#" class="btn-link">Read more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h2 class="mb-4">Frequently Asked Questions</h2>
+                
+                <div class="accordion" id="faqAccordion">
+                    <!-- FAQ Item 1 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                What is Mobile Prepaid?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Mobile Prepaid is our pay-as-you-go service that gives you full control over your mobile spending. You add credit to your account before using our services, which means no contracts, no credit checks, and no unexpected bills.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                How do I recharge my prepaid account?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                You can recharge your account through our mobile app, website, at any of our retail partners, or by purchasing a recharge card. Simply enter your phone number and the recharge code or select your preferred payment method.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                How do I check my remaining balance?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                You can check your balance by dialing *123# from your mobile phone, logging into your account on our website or mobile app, or by sending "BAL" to 1234 via SMS.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                What happens if my credit runs out?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                When your credit runs out, you won't be able to make calls, send texts, or use data until you recharge. However, you'll still be able to receive calls and texts for a period of time, and you can always call emergency services regardless of your balance.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                How do I change my prepaid plan?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                You can change your prepaid plan anytime by logging into your account on our website or mobile app, selecting "My Plan," and choosing a new plan from the available options. The change will take effect immediately or at the end of your current billing cycle.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="contact-box">
+                    <h3>Still need help?</h3>
+                    <p>Our customer support team is available 24/7 to assist you with any questions or issues.</p>
+                    <div class="contact-options">
+                        <div class="contact-option">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                            </svg>
+                            <span>Call us: 1-800-PREPAID</span>
+                        </div>
+                        <div class="contact-option">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
+                                <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                            </svg>
+                            <span>Chat with us</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5>Company</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5>Plans & Services</h5>
+                <ul class="list-unstyled">
+                    <li><a href="./Prepaid.html">Prepaid Plans</a></li>
+                    <li><a href="#">International Options</a></li>
+                    <li><a href="#">Data Plans</a></li>
+                    <li><a href="#">Bundles</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5>Support</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Find a Store</a></li>
+                    <li><a href="#">Coverage Map</a></li>
+                    <li><a href="#">Device Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5>Connect with us</h5>
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                        </svg>
+                    </a>
+                    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="./js/Help.js"></script>
+</html>

@@ -3,7 +3,6 @@ function isLoggedIn() {
     return localStorage.getItem("userLoggedIn") === "true"; 
 }
 
-
 // Function to show Quick Recharge errors below the input field
 function showQuickRechargeError(message) {
     let errorDiv = document.getElementById("quick-recharge-error");
@@ -27,18 +26,21 @@ function isValidPhoneNumber(phoneNumber) {
     return phoneRegex.test(phoneNumber);
 }
 
-
-
-// Function to check if number exists in Subscriber.json 
+// Function to check if number exists in API
 function isRegisteredNumber(phoneNumber, callback) {
-    fetch("Subscriber.json")
-        .then(response => response.json())
-        .then(data => {
-            const validNumbers = data.users.map(user => user.phone);
+    fetch("http://localhost:8083/api/users")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to fetch users");
+            }
+            return response.json();
+        })
+        .then(users => {
+            const validNumbers = users.map(user => user.phoneNumber); // Extract phone numbers
             callback(validNumbers.includes(phoneNumber));
         })
         .catch(error => {
-            console.error("Error fetching subscriber data:", error);
+            console.error("Error fetching user data:", error);
             callback(false);
         });
 }
@@ -50,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (phoneInput) {
         const storedPhone = localStorage.getItem("userPhone");
         if (storedPhone) {
-            phoneInput.value = storedPhone; // ✅ Auto-fill number on Prepaid page
+            phoneInput.value = storedPhone; //  Auto-fill number on Prepaid page
         }
     }
 
@@ -63,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const inputNumber = document.getElementById("quick-recharge-number").value.trim();
             
             if (!inputNumber) {
-                showQuickRechargeError("Please enter a phone number.");
+                showQuickRechargeError("Please enter a mobicomm number.");
                 return;
             }
 
@@ -74,14 +76,15 @@ document.addEventListener("DOMContentLoaded", function() {
             
             isRegisteredNumber(inputNumber, function (isRegistered) {
                 if (isRegistered) {
-                    console.log("✅ Quick Recharge number found! Redirecting to Prepaid.");
+                    console.log(" Quick Recharge number found! Redirecting to Prepaid.");
                     localStorage.setItem("userPhone", inputNumber); // Store number
-                    window.location.href = "Prepaid.html"; // ✅ Redirect to Prepaid
+                    window.location.href = "/Mobile-Prepaid_Capstone-1/Subscriber/Prepaid.html"; //  Redirect to Prepaid
                 } else {
-                    console.log("❌ Number not registered! Staying on index.");
-                    showQuickRechargeError("Number not registered for Quick Recharge.");
+                    console.log(" Number not registered! Staying on index.");
+                    showQuickRechargeError("Not a registered MobiComm number.");
                 }
             });
         });
     }
 });
+

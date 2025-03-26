@@ -17,7 +17,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="./asserts/logo-finalz.png" alt="Logo" height="50" width="100"> 
+                <img src="./assets/logo-finalz.png" alt="Logo" height="50" width="100"> 
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -31,7 +31,7 @@
                     <li class="nav-item">
                         <a class="nav-link text-decoration-none text-reset" href="./index.html#zen">Recharge</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="#">Help</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./Help.html">Help</a></li>
                 </ul>
 
                 <div class="d-flex align-items-center">
@@ -50,7 +50,7 @@
         <div class="content-wrapper">
             
             <div class="left-panel">
-                <img src="./asserts/photo-otp.png" alt="Side Image">
+                <img src="./assets/photo-otp.png" alt="Side Image">
             </div>
 
             
@@ -75,161 +75,150 @@
 
     <!-- SweetAlert CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        // Get stored OTP from localStorage
-let storedOtp = localStorage.getItem("otp");
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const otpForm = document.getElementById("otpForm");
+    const otpInputs = document.querySelectorAll(".otp-input");
+    const verifyOtpBtn = document.querySelector("#otpForm button");
+    const phoneNumber = localStorage.getItem("phone");
+    let errorMessage = document.getElementById("error-message");
 
-// Selecting elements
-const timerElement = document.getElementById("timer");
-const resendButton = document.getElementById("resendButton");
-const otpInputs = document.querySelectorAll(".otp-input");
-const otpForm = document.getElementById("otpForm");
-const verifyButton = document.querySelector('button[type="submit"]'); // FIXED: Selecting Verify OTP button
+    if (!phoneNumber) {
+        window.location.href = "phone.html";
+        return;
+    }
 
-// Initially disable the Verify OTP button
-verifyButton.disabled = true;
+    if (!errorMessage) {
+        errorMessage = document.createElement("div");
+        errorMessage.id = "error-message";
+        errorMessage.style.color = "red";
+        errorMessage.style.marginTop = "10px";
+        otpForm.appendChild(errorMessage);
+    }
 
-// Function to check if all OTP fields are filled
-function checkOtpFilled() {
-    const allFilled = [...otpInputs].every(input => input.value.length === 1);
-    verifyButton.disabled = !allFilled; // Enable only when all fields are filled
-}
-
-// Event listeners for OTP input fields
-otpInputs.forEach(input => {
-    input.addEventListener("input", checkOtpFilled);
-    input.addEventListener("keydown", checkOtpFilled);
-});
-
-let countdown = 10; // Timer duration
-resendButton.disabled = true; // Disable resend button initially
-
-// Function to start countdown
-function startCountdown() {
-    countdown = 10;
-    resendButton.disabled = true; // Disable resend button
-    timerElement.innerHTML = `Resend OTP in ${countdown} seconds`;
-
-    let timerInterval = setInterval(() => {
-        timerElement.innerHTML = `Resend OTP in ${countdown--} seconds`;
-        if (countdown < 0) {
-            clearInterval(timerInterval);
-            resendButton.disabled = false; // Enable resend button
-            timerElement.innerHTML = "You can resend OTP now!";
-        }
-    }, 1000);
-}
-
-// Start countdown on page load
-startCountdown();
-
-// Auto move to next input
-otpInputs.forEach((input, index) => {
-    input.addEventListener("input", () => {
-        if (input.value.length === 1 && index < otpInputs.length - 1) {
-            otpInputs[index + 1].focus();
-        }
-    });
-
-    input.addEventListener("keydown", (event) => {
-        if (event.key === "Backspace" && index > 0 && input.value === "") {
-            otpInputs[index - 1].focus();
-        }
-    });
-});
-
-// OTP Form Submission
-otpForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-    const enteredOtp = [...otpInputs].map(input => input.value).join("");
-    
-    if (parseInt(enteredOtp) === parseInt(storedOtp)) {
-        localStorage.setItem("isLoggedIn", "true");
-
-        // ✅ SweetAlert for Success Message
-        Swal.fire({
-            title: "OTP Verified!",
-            text: "Redirecting to your profile...",
-            icon: "success",
-            timer: 2000,
-            showConfirmButton: false
-        }).then(() => {
-            window.location.href = "Profile.html";
+    otpInputs.forEach((input, index) => {
+        input.addEventListener("input", function () {
+            if (this.value.length === 1 && index < otpInputs.length - 1) {
+                otpInputs[index + 1].focus();
+            }
+            verifyOtpBtn.disabled = !Array.from(otpInputs).every(i => i.value.length === 1);
         });
 
-    } else {
-        // Create popup message instead of alert
-        let errorPopup = document.getElementById("error-popup");
-        if (!errorPopup) {
-            errorPopup = document.createElement("div");
-            errorPopup.id = "error-popup";
-            errorPopup.style.color = "red";
-            errorPopup.style.marginTop = "10px";
-            errorPopup.style.textAlign = "center";
-            errorPopup.style.padding = "8px";
-            errorPopup.style.borderRadius = "4px";
-            errorPopup.style.backgroundColor = "#ffeeee";
-            otpForm.appendChild(errorPopup);
+        input.addEventListener("keydown", function (event) {
+            if (event.key === "Backspace" && index > 0 && this.value === "") {
+                otpInputs[index - 1].focus();
+            }
+        });
+    });
+
+    otpForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const otp = Array.from(otpInputs).map(input => input.value).join("");
+
+        if (otp.length !== 4) {
+            errorMessage.textContent = "Please enter a valid 4-digit OTP.";
+            return;
         }
-        
-        // errorPopup.textContent = "Invalid OTP. Try again.";
-        errorPopup.innerHTML = `<i class="fas fa-exclamation-circle"></i> Invalid OTP. Try again.`;
-errorPopup.style.color = "#d9534f";
-errorPopup.style.fontSize = "12px";
-        
-        // Clear input fields
-        otpInputs.forEach(input => input.value = "");
-        otpInputs[0].focus();
-    }
-});
 
-// Resend OTP Functionality
-resendButton.addEventListener("click", () => {
-    // Generate new OTP (for testing purposes, normally this comes from the server)
-    storedOtp = Math.floor(1000 + Math.random() * 9000); // 4-digit OTP
-    localStorage.setItem("otp", storedOtp);
-    
-    // Create popup notification instead of alert
-    let otpPopup = document.getElementById("otp-popup");
-    if (!otpPopup) {
-        otpPopup = document.createElement("div");
-        otpPopup.id = "otp-popup";
-        otpPopup.style.position = "fixed";
-        otpPopup.style.top = "20px";
-        otpPopup.style.left = "50%";
-        otpPopup.style.transform = "translateX(-50%)";
-        otpPopup.style.backgroundColor = "#ffeeee";
-        otpPopup.style.color = "#d9534f";
-        otpPopup.style.padding = "10px 20px";
-        otpPopup.style.borderRadius = "4px";
-        otpPopup.style.boxShadow = "0 2px 5px rgba(0,0,0,0.2)";
-        otpPopup.style.zIndex = "1000";
-        document.body.appendChild(otpPopup);
-    }
-    
-    otpPopup.textContent = `New OTP Sent: ${storedOtp}`; // Remove this in production
-    otpPopup.style.display = "block";
-    
-    // Hide popup after 3 seconds
-    setTimeout(() => {
-        otpPopup.style.display = "none";
-    }, 3000);
+        try {
+            const response = await fetch("http://localhost:8083/api/auth/verifyOTP", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ phoneNumber, otp })
+            });
 
-    // Clear input fields
-    otpInputs.forEach(input => input.value = "");
-    otpInputs[0].focus();
-    
-    // Hide the error message
-    const errorPopup = document.getElementById("error-popup");
-    if (errorPopup) {
-        errorPopup.style.display = "none";
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message || "Invalid OTP.");
+            }
+
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("accessToken", result.accessToken);
+            localStorage.setItem("refreshToken", result.refreshToken);
+            localStorage.setItem("userDetails", JSON.stringify(result.userDetails));
+
+            Swal.fire({
+                title: "OTP Verified!",
+                text: "Redirecting to your profile...",
+                icon: "success",
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = "Profile2.html";
+            });
+
+        } catch (error) {
+            console.error("OTP Verification Error:", error);
+            errorMessage.innerHTML = `
+                <div class="alert alert-danger p-2 mt-2" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    ${error.message}
+                </div>`;
+            otpInputs.forEach(input => input.value = "");
+            otpInputs[0].focus();
+        }
+    });
+
+    document.getElementById("resendButton").addEventListener("click", async () => {
+        try {
+            const response = await fetch("http://localhost:8083/api/auth/resend-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ phoneNumber })
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to resend OTP.");
+            }
+
+            const result = await response.json();
+
+            Swal.fire({
+                title: "OTP Sent!",
+                text: "Check your registered email for the new OTP.",
+                icon: "info",
+                timer: 2000,
+                showConfirmButton: false
+            });
+
+            otpInputs.forEach(input => input.value = "");
+            otpInputs[0].focus();
+            startCountdown();
+        } catch (error) {
+            console.error("Error resending OTP:", error);
+            Swal.fire({
+                title: "Error!",
+                text: "Failed to resend OTP. Try again later.",
+                icon: "error"
+            });
+        }
+    });
+
+    let countdown = 7;
+    const timerElement = document.getElementById("timer");
+    const resendButton = document.getElementById("resendButton");
+
+    function startCountdown() {
+        countdown = 7;
+        resendButton.disabled = true;
+        timerElement.innerHTML = `Resend OTP in ${countdown} seconds`;
+
+        let timerInterval = setInterval(() => {
+            timerElement.innerHTML = `Resend OTP in ${countdown--} seconds`;
+            if (countdown < 0) {
+                clearInterval(timerInterval);
+                resendButton.disabled = false;
+                timerElement.innerHTML = "You can resend OTP now!";
+            }
+        }, 1000);
     }
 
-    // Restart the countdown
     startCountdown();
 });
 
-    </script>
+</script>
+
 
 </body>
 </html>

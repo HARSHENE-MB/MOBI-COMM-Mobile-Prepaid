@@ -48,6 +48,11 @@ body {
     font-weight: bold;
 }
 
+/*direct underline for active nav links */
+.nav-link.active {
+    border-bottom: 3px solid red;
+}
+
 /* Carousel spacing */
 .carousel {
     margin-top: 10px;
@@ -131,6 +136,7 @@ body {
     color: white;
 }
 
+
 /* Plan Cards - Darker theme */
 .card {
     border-radius: 12px;
@@ -206,6 +212,7 @@ body {
     transition: all 0.3s;
     border: none;
     font-size: 14px;
+    
 }
 
 .view-details-btn {
@@ -496,6 +503,63 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border: 1px dashed #999;
 }
+
+/* Dropdown Menu */
+.dropdown-menu {
+    min-width: 100px; 
+    padding: 3px 0; 
+    font-size: 0.78rem; 
+    margin-top: 0;
+    border-radius: 6px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+/* Dropdown Items */
+.dropdown-item {
+    padding: 5px 8px; 
+    font-size: 0.78rem; 
+    white-space: nowrap; 
+    transition: background 0.3s ease, color 0.2s ease;
+}
+
+/* Hover Effect */
+.dropdown-item:hover {
+    background: linear-gradient(to right, #f32929, #f06b6b);
+    color: white;
+    border-radius: 4px; 
+}
+
+/* Dropdown Visibility */
+.dropdown-menu.show {
+    display: block;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 4px;
+}
+
+/* Dropdown Hover Behavior */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Mobile Responsive Tweaks */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        min-width: 120px; 
+        font-size: 0.85rem; 
+    }
+
+    .dropdown-item {
+        padding: 8px 10px; 
+    }
+}
+
+
+
 
 /* Responsive Styles */
 @media (max-width: 991.98px) {
