@@ -38,8 +38,12 @@ public class OtpService {
         }
     }
 
-    
     public String generateOTP(String email) {
+        if (email == null || email.isEmpty()) {
+            logger.error("Email is null or empty.");
+            throw new IllegalArgumentException("Email is required.");
+        }
+
         int requestCount = otpRequestCount.getOrDefault(email, 0);
         if (requestCount >= otpRequestLimit) {
             logger.warn("OTP request limit reached for {}", email);
@@ -52,20 +56,30 @@ public class OtpService {
         otpRequestCount.put(email, requestCount + 1);
 
         // Send OTP via email
-        sendOtpEmail(email, otp);
+        if (!sendOtpEmail(email, otp)) {
+            throw new RuntimeException("Failed to send OTP.");
+        }
 
         logger.info("Generated OTP for {}: {}", email, otp);
         return otp;
     }
 
-   
     public boolean sendOtpEmail(String email, String otp) {
-        String subject = "Your Mobicomm OTP Code";
-        String body = "Your OTP for MobiComm login is: " + otp + ". This OTP is valid for " + otpExpirySeconds / 60 + " minutes.";
+        String subject = "[MobiComm] Secure OTP Verification";
+        String body = "<html><body>"
+                + "<h3 style='color: #2c3e50;'>MobiComm Secure OTP Verification</h3>"
+                + "<p>Dear User,</p>"
+                + "<p>Your One-Time Password (OTP) for secure access is: <strong style='font-size: 18px;'>" + otp + "</strong></p>"
+                + "<p>This OTP is valid for <strong>" + otpExpirySeconds / 60 + " minutes</strong>. Do not share this OTP with anyone.</p>"
+                + "<hr>"
+                + "<p>If you did not request this OTP, please ignore this email or contact our support team immediately.</p>"
+                + "<p>Best Regards,<br><strong>MobiComm Support Team</strong></p>"
+                + "<p>📧 support@mobicomm.com | ☎ +1-800-123-4567</p>"
+                + "</body></html>";
 
         try {
             emailService.sendEmail(email, subject, body);
-            logger.info("OTP sent successfully to {}", email);
+            logger.info("OTP email sent successfully to {}", email);
             return true;
         } catch (Exception e) {
             logger.error("Failed to send OTP email to {}: {}", email, e.getMessage());
@@ -73,46 +87,32 @@ public class OtpService {
         }
     }
 
-    /**
-     * Retrieves the stored OTP if it has not expired.
-     */
-    public String getStoredOTP(String email) {
-        OtpEntry otpEntry = otpStorage.get(email);
-        if (otpEntry != null) {
-            if (Instant.now().isBefore(otpEntry.timestamp.plusSeconds(otpExpirySeconds))) {
-                return otpEntry.otp;
-            } else {
-                clearOTP(email); // Remove expired OTP
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Validates the OTP entered by the user.
-     */
     public boolean isOtpValid(String email, String enteredOtp) {
-        String storedOtp = getStoredOTP(email);
-        boolean isValid = storedOtp != null && storedOtp.equals(enteredOtp);
+        OtpEntry otpEntry = otpStorage.get(email);
+        if (otpEntry == null) {
+            logger.warn("No OTP found for {}", email);
+            return false;
+        }
 
+        if (Instant.now().isAfter(otpEntry.timestamp.plusSeconds(otpExpirySeconds))) {
+            logger.warn("OTP expired for {}", email);
+            clearOTP(email);
+            return false;
+        }
+
+        boolean isValid = otpEntry.otp.equals(enteredOtp);
         if (isValid) {
             clearOTP(email);
         }
         return isValid;
     }
 
-    /**
-     * Removes an OTP after successful validation or expiry.
-     */
     public void clearOTP(String email) {
         otpStorage.remove(email);
         otpRequestCount.remove(email);
     }
 
-    /**
-     * Periodic cleanup of expired OTPs (Runs every 5 minutes).
-     */
-    @Scheduled(fixedRate = 300000) // 5 minutes
+    @Scheduled(fixedRate = 300000) // Runs every 5 minutes
     public void cleanExpiredOtps() {
         otpStorage.entrySet().removeIf(entry ->
             Instant.now().isAfter(entry.getValue().timestamp.plusSeconds(otpExpirySeconds))
